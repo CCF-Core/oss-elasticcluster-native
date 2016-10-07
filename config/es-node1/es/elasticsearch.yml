@@ -1,0 +1,14 @@
+node.name: "excalibur-1"
+cluster.name: "ccf-oss"
+node.data: true
+node.master: true
+path.data: /data
+network.host: _enp0s8_
+discovery.zen.minimum_master_nodes: 1
+#discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.unicast.hosts: 
+  - 10.5.20.10
+  - 10.5.20.11
+  - 10.5.20.12
+action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,logstash-*
+

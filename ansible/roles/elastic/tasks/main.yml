@@ -1,0 +1,55 @@
+---
+# tasks file for elastic
+
+   - name: Install Java
+     yum: name=java-1.8.0-openjdk-headless state=present
+     become: True
+
+   - name: update vm_max_map_count
+     command: /sbin/sysctl -w vm.max_map_count=400000
+     become: True
+
+   - name: Install Elasticsearch Server Repos
+     template: src=elastic.repo.j2 dest=/etc/yum.repos.d/elastic.repo
+     tags: 'elastic-repo'
+     become: True
+
+   - name: Install Elasticsearch
+     yum: name=elasticsearch state=present
+     become: True
+
+   - name: Create Elasticsearch data directories
+     file: path=/mnt/es/data state=directory owner=elasticsearch
+     become: True
+
+   - name: Create Elasticsearch log directories
+     file: path=/mnt/es/logs state=directory owner=elasticsearch
+     become: True
+
+   - name: Elasticsearch config file edits
+     template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml
+     tags: "elastic-yml"
+     become: True
+
+   - name: Ensure elastic environment variables are set.
+     become: True
+     blockinfile:
+         dest: /etc/sysconfig/elasticsearch
+         marker: "# <!-- {mark} ANSIBLE MANAGED BLOCK -->"
+         block: |
+                 MAX_OPEN_FILES=65535
+                 MAX_LOCKED_MEMORY=unlimited
+                 ES_JAVA_OPTS="-Xms4g -Xmx4g"
+
+   - name: Start Elasticsearch Service
+     service: name=elasticsearch state=restarted enabled=true
+     become: True
+
+   - name: Install Elasticsearch x-pack
+     command: /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack
+     become: True
+     ignore_errors: True
+
+   - name: Restart Elasticsearch Service for x-pack
+     service: name=elasticsearch state=restarted enabled=true
+     become: True

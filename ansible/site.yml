@@ -1,0 +1,51 @@
+---
+# This playbook deploys the whole application stack in this site.  
+
+- name: Deploy Openstack nodes
+  hosts: localhost
+  become: true
+  roles:
+     - nova-client
+     - instance-destroy
+     - instance-create
+  environment: "{{ envionment }}"
+
+
+
+- name: Update /etc/hosts on control machine
+  hosts: localhost
+  remote_user: "{{ remote_user }}"
+  tags: 'etc-hosts'
+  roles:
+    - etc-hosts
+  environment: "{{ envionment }}"
+
+
+- name: Update /etc/hosts on swarm nodes
+  hosts: all
+  remote_user: "{{ remote_user }}"
+  tags: 'etc-hosts'
+  become: true
+  gather_facts: False
+  roles:
+    - etc-hosts
+  environment: "{{ envionment }}"
+
+- name: Install Docker
+  hosts: elasticsearch
+  remote_user: "{{ remote_user }}"
+  tags: docker
+  become: true
+  roles:
+    - docker
+
+- name: Elasticsearch Nodes
+  hosts: elasticsearch
+  remote_user: cloud-user
+  become: true
+  tags: elastic
+
+  roles:
+     - elastic
+
+  

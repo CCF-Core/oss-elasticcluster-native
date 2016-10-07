@@ -1,0 +1,27 @@
+---
+
+- name: Get list of all VMs
+  os_server_facts:
+    timeout: 300
+  delegate_to: localhost
+
+- name: Get IP addresses of the hosts
+  set_fact:
+    host_ips: "{{ host_ips | default({}) | combine({item.name : item.private_v4 } )}}"
+  with_items: "{{ openstack_servers }}"
+  when: item.name in groups['swarm']
+  delegate_to: localhost
+  no_log: True
+
+- name: Deploy consul
+  shell: docker run -d -p 8500:8500 --name=consul progrium/consul -server -bootstrap
+  when: inventory_hostname in groups['swarm-masters']
+
+- name: Deploy swarm master
+  shell: docker run -d -p 4000:4000 swarm manage -H :4000 --replication --advertise {{ host_ips[inventory_hostname] }}:4000 consul://{{ host_ips[inventory_hostname] }}:8500
+  when: inventory_hostname in groups['swarm-masters']
+
+- name: Deploy swarm nodes
+  shell: docker run -d swarm join --advertise={{ host_ips[inventory_hostname] }}:2375 consul://{{ host_ips[groups['swarm-masters'][0]] }}:8500
+  when: inventory_hostname in groups['swarm-nodes']
+

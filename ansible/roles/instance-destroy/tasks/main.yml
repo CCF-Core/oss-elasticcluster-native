@@ -1,0 +1,24 @@
+---
+
+- name: Install prerequisites
+  yum: name={{ item }} state=latest
+  with_items: "{{ prerequisites }}"
+
+- name: Update pip
+  pip: name=pip state=latest
+
+- name: Install shade
+  pip: name=shade
+
+- name: Destroy all openstack_vms
+  os_server:
+    state: absent
+    availability_zone: "{{ openstack_availability_zone }}"
+    key_name: "{{ openstack_key_name }}"
+    flavor: "{{ openstack_nodes_flavor }}"
+    security_groups: "{{ openstack_security_groups }}"
+    auto_ip: "{{ openstack_auto_ip }}"
+    name: "{{ item }}"
+    image: "{{ openstack_image }}"
+    timeout: 300
+  with_items: "{{ groups['elasticsearch'] }}"

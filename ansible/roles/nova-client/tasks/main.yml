@@ -1,0 +1,21 @@
+---
+
+- name: Set Python interpreter to system Python
+  set_fact:
+    ansible_python_interpreter: /usr/bin/python
+
+- name: Install python-related packages
+  yum: name={{ item }} state=latest
+  with_items:
+    - python-devel
+    - python-pip
+  when: ansible_os_family == 'RedHat'
+
+- name: Install pip packages
+  pip: name={{ item }}
+  with_items:
+    - docker-py
+    - dnspython
+
+- name: Install nova-client
+  pip: name=python-novaclient

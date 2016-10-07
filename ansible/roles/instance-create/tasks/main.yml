@@ -1,0 +1,39 @@
+---
+
+- name: Install prerequisites
+  yum: name={{ item }} state=latest
+  with_items: "{{ prerequisites }}"
+
+- name: Update pip
+  pip: name=pip state=latest
+
+- name: Install shade
+  pip: name=shade
+
+- name: Create all openstack_vms
+  os_server:
+    state: present
+    availability_zone: "{{ openstack_availability_zone }}"
+    key_name: "{{ openstack_key_name }}"
+    flavor: "{{ openstack_nodes_flavor }}"
+    security_groups: "{{ openstack_security_groups}}"
+    timeout: 300
+    auto_ip: "{{ openstack_auto_ip }}"
+    name: "{{ item }}"
+    image: "{{ openstack_image }}"
+    meta:
+      { DO_NOT_DELETE: 'true', SCRUM_PROJECT_KEY: 'OSS2CIS', MAILER: 'cis-oss-dev@cisco.com' }
+  with_items: "{{ groups['elasticsearch'] }}"
+
+#
+#- name: Get list of all VMs
+#  os_server_facts:
+#    timeout: 300
+
+#- name: Update named zones
+#  template: src=db.oss.cisco.com.j2 dest=/etc/named/zones/db.oss.cisco.com owner=root group=root mode=0644
+#  register: named_zones
+
+#- name: Restart named service
+#  service: name=named state=restarted enabled=yes
+#  when: named_zones.changed

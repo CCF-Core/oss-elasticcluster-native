@@ -1,0 +1,36 @@
+#Install Docker
+
+- name: Add Docker rpm key
+  rpm_key: state=present key=https://sks-keyservers.net/pks/lookup?op=get&search=0xee6d536cf7dc86e2d7d56f59a178ac6c6238f52e
+
+- name: Install yum utils
+  yum: name=yum-utils state=present
+
+- name: Add docker centos repository
+  yum_repository:
+    name: docker_centos
+    description: Docker centos repo
+    baseurl: https://packages.docker.com/1.12/yum/repo/main/centos/7
+
+- name: Install Docker
+  yum: name=docker-engine-1.12.1.cs1 state=present
+
+- name: Create Docker service folder
+  file: path={{ item }} state=directory recurse=yes
+  with_items:
+    - "/etc/systemd/system/docker.service.d"
+
+- name: Create docker service
+  copy: src=docker.conf dest=/etc/systemd/system/docker.service.d/docker.conf
+
+- name: systemd daemon reload
+  shell: sudo systemctl daemon-reload
+
+- name: Start docker service
+  service: name=docker.service enabled=yes state=started
+
+- name: Add '{{ remote_user }} ' to docker group
+  user: name='{{ remote_user }}' groups=docker append=yes
+
+- name: Wait for docker
+  wait_for: port=2375 host="{{ inventory_hostname }}" delay=10 timeout=600

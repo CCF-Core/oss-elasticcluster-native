@@ -1,0 +1,5 @@
+---
+
+prerequisites:
+  - python-devel
+  - python-pip

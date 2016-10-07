@@ -1,0 +1,9 @@
+#node.name: "excalibur-1"
+cluster.name: "ccf-oss"
+node.data: true
+node.master: true
+path.data: /data
+network.host: _eth0_
+discovery.zen.minimum_master_nodes: 1
+action.auto_create_index: .security,.monitoring*,.watches,.triggered_watches,.watcher-history*,logstash-*
+
