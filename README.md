@@ -14,16 +14,22 @@ This code will:
 
 The variables that can be edited are located in the group_vars/all:
 
-
-
-
 **environment_name:** us-virginia-1
-**openstack_auth_url:**https://us-virginia-1.cloud.cisco.com:5000/v2.0/ **openstack_availability_zone:** iad10-1-csx 
+
+**openstack_auth_url:**https://us-virginia-1.cloud.cisco.com:5000/v2.0/ 
+
+**openstack_availability_zone:** iad10-1-csx 
+
 **openstack_image:** 9e252722-8a63-43a5-bee3-c6a88e543513 
+
 **openstack_tenant:** OSS-20-Testing-64156 
+
 **openstack_nodes_flavor:** CO3-Large
+
 **openstack_key_name:** oss20
+
 **openstack_auto_ip:** no 
+
 **openstack_security_groups:**
    - default
 
@@ -31,6 +37,9 @@ The variables that can be edited are located in the group_vars/all:
 **environment:**
    
 **OS_USERNAME:** oss-service.gen   
+
 **OS_PASSWORD:** <"Password">
-**OS_AUTH_URL:**"{{ openstack_auth_url }}"   
+
+**OS_AUTH_URL:**"{{ openstack_auth_url }}"
+
 **OS_TENANT_NAME: **"{{openstack_tenant }}"
