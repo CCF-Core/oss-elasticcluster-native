@@ -81,7 +81,7 @@ network.host: {{ ansible_default_ipv4.address }}
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 # discovery.zen.ping.unicast.hosts: ["host1", "host2"]
-discovery.zen.ping.unicast.hosts: ["es-node1", "es-node2", "es-node3"]
+discovery.zen.ping.unicast.hosts: ["es-node1.cisco.com.node.consul","es-node2.cisco.com.node.consul","es-node3.cisco.com.node.consul"]
 discovery.zen.minimum_master_nodes: 1
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):

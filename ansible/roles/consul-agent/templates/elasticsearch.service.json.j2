@@ -1,0 +1,16 @@
+{
+ "service": {
+ "name": "elasticsearch",
+ "tags": ["es"],
+ "port": 9200,
+ "timeout": "10s"
+},
+
+"check":
+    {
+      "id": "Elaststicsearch Service Port",
+      "name": "ES port 9200",
+      "tcp": "{{ ansible_default_ipv4.address }}:9200",
+      "interval": "10s"
+    }
+}

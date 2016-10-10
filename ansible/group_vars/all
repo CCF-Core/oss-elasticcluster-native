@@ -12,8 +12,15 @@ openstack_security_groups:
   - default
 
 remote_user: "cloud-user"
+datacenter: "oss-va1"
+consul_server_01: 10.0.5.97
+consul_server_02: 10.0.5.117
+consul_server_03: 10.0.5.118
+consul_server_04: 10.0.5.127
+consul_server_05: 10.0.5.128
 
-envionment:
+
+env_os:
   OS_USERNAME: oss-service.gen
   OS_PASSWORD: a5459a96921c422497aa721bbb1a6c91
   OS_AUTH_URL: "{{ openstack_auth_url }}"

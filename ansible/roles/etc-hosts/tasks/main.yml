@@ -30,11 +30,11 @@
   when:  etc_hosts[item] in groups['elasticsearch']
   with_items: "{{ etc_hosts }}"
 
-- name: Update resolv.conf
-  lineinfile: dest=/etc/resolv.conf regexp='^nameserver.*' line="nameserver 8.8.8.8" state=present
+- name: overwrite /etc/resolv.conf
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf backup=yes
   become: true
-  when:  inventory_hostname in groups['elasticsearch']
 
 - name: Disable selinux
   selinux: state=disabled
-  when:  inventory_hostname in groups['elasticsearch']
+  become: true
+  when: inventory_hostname in groups['elasticsearch']

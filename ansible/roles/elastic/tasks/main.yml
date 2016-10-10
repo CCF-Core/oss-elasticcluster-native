@@ -1,6 +1,15 @@
 ---
 # tasks file for elastic
 
+   - name: overwrite /etc/resolv.conf
+     template: src=resolv.conf.j2 dest=/etc/resolv.conf backup=yes
+     become: true
+
+   - name: Disable selinux
+     selinux: state=disabled
+     become: true
+     when: inventory_hostname in groups['elasticsearch']
+
    - name: Install Java
      yum: name=java-1.8.0-openjdk-headless state=present
      become: True

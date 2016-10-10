@@ -1,0 +1,17 @@
+{
+   "datacenter": "{{ datacenter }}",
+   "data_dir": "/opt/consul",
+   "log_level": "INFO",
+   "start_join": ["{{ consul_server_01 }}","{{ consul_server_02 }}","{{ consul_server_03 }}","{{ consul_server_04 }}","{{ consul_server_05 }}"],
+   "server": false,
+
+   "addresses": {
+      "http": "0.0.0.0",
+      "dns": "0.0.0.0"
+      },
+
+   "ports":  {
+      "dns": 53
+   }
+
+}

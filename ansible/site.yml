@@ -5,12 +5,10 @@
   hosts: localhost
   become: true
   roles:
-     - nova-client
-     - instance-destroy
-     - instance-create
-  environment: "{{ envionment }}"
-
-
+#     - nova-client
+#     - instance-destroy
+#     - instance-create
+  environment: "{{ env_os }}"
 
 - name: Update /etc/hosts on control machine
   hosts: localhost
@@ -18,26 +16,13 @@
   tags: 'etc-hosts'
   roles:
     - etc-hosts
-  environment: "{{ envionment }}"
+  environment: "{{ env_os }}"
 
-
-- name: Update /etc/hosts on swarm nodes
-  hosts: all
+- name: Install consul agent
   remote_user: "{{ remote_user }}"
-  tags: 'etc-hosts'
-  become: true
-  gather_facts: False
-  roles:
-    - etc-hosts
-  environment: "{{ envionment }}"
-
-- name: Install Docker
   hosts: elasticsearch
-  remote_user: "{{ remote_user }}"
-  tags: docker
-  become: true
   roles:
-    - docker
+    - consul-agent
 
 - name: Elasticsearch Nodes
   hosts: elasticsearch
@@ -46,6 +31,4 @@
   tags: elastic
 
   roles:
-     - elastic
-
-  
+    - elastic
