@@ -1,6 +1,6 @@
 **OSS Native Elasticsearch Cluster deployment ansible**
 
-This repo is for deploying the native 3 node elasticsearch cluster, based on the 5.x code in the elastic repos.  
+This repo is for deploying the native 3 node elasticsearch cluster, based on the 5.x code based on a URL for a RPM.
 
 Running this ansible will deploy to an environment (based on your inventory flag).  This code will also **delete** any existing nodes that are listed in that inventory file.  This could result in data loss.  
 
@@ -10,7 +10,8 @@ This code will:
 * Update the hosts file on the localhost to point to the new ip addresses
 * Update the hosts file on each of the nodes themselves
 * Deploy docker on the hosts.  (for future use)
-* Install Elasticsearch 5.x based on the yum repos from elastic.co
+* Install Elasticsearch 5.x based on a URL from the groups/all variables
+* Register the service with consul.
 
 The variables that can be edited are located in the group_vars/all:
 

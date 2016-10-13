@@ -5,9 +5,9 @@
   hosts: localhost
   become: true
   roles:
-#     - nova-client
-#     - instance-destroy
-#     - instance-create
+     - nova-client
+     - instance-destroy
+     - instance-create
   environment: "{{ env_os }}"
 
 - name: Update /etc/hosts on control machine
