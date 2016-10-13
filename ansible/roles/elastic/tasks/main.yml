@@ -18,14 +18,18 @@
      command: /sbin/sysctl -w vm.max_map_count=400000
      become: True
 
-   - name: Install Elasticsearch Server Repos
-     template: src=elastic.repo.j2 dest=/etc/yum.repos.d/elastic.repo
-     tags: 'elastic-repo'
-     become: True
+   - name: Install Elasticsearch from URL
+     yum: name={{ elasticsearch_url }} state=present
+     become: true
 
-   - name: Install Elasticsearch
-     yum: name=elasticsearch state=present
-     become: True
+#   - name: Install Elasticsearch Server Repos
+#     template: src=elastic.repo.j2 dest=/etc/yum.repos.d/elastic.repo
+#     tags: 'elastic-repo'
+#     become: True
+
+#   - name: Install Elasticsearch
+#     yum: name=elasticsearch state=present
+#     become: True
 
    - name: Create Elasticsearch data directories
      file: path=/mnt/es/data state=directory owner=elasticsearch
