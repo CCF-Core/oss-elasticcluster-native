@@ -1,0 +1,14 @@
+---
+hosts:
+  consul-server-01:
+    ip: 192.168.20.46
+    ssh_port: 8246
+    mem: 256
+    cpus: 1
+    hostname: consul-server-01
+  es-node-01:
+    ip: 192.168.20.47
+    ssh_port: 8247
+    mem: 1024
+    cpus: 2
+    hostname: es-node-01

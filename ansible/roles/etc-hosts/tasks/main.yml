@@ -21,7 +21,7 @@
   local_action: wait_for port=22 host="{{ inventory_hostname }}" delay=10 timeout=600 search_regex=OpenSSH
   when:  inventory_hostname in groups['elasticsearch']
 
-- name: Sleeping till SSHD to be be completely up
+- name: Sleeping till SSHD service is up
   pause: minutes=2
 
 - name: Add new entries to /etc/hosts

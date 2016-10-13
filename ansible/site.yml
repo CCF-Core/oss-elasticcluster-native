@@ -18,9 +18,17 @@
     - etc-hosts
   environment: "{{ env_os }}"
 
-- name: Install consul agent
+- name: Install consul server
+  remote_user: "{{ remote_user }}"
+  hosts: consul
+  tags: consul
+  roles:
+    - consul-agent
+
+- name: Install consul agent on elasticsearch hosts
   remote_user: "{{ remote_user }}"
   hosts: elasticsearch
+  tags: consul
   roles:
     - consul-agent
 

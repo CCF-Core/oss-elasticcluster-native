@@ -1,35 +1,47 @@
 ---
 # tasks file for consul-agent
+#  - name: Get list of all VMs
+#    os_server_facts:
+#      timeout: 300
+#    delegate_to: localhost
+#
+#  - name: Generate consul IP list
+#    set_fact:
+#      consul_ips: "{{ consul_ips | default({}) | combine({item.private_v4} )}}"
+#    with_items: "{{ openstack_servers }}"
+#    when: item.name in groups['consul']
+#    delegate_to: localhost
+#    no_log: True
 
-   - name: Copy Consul binary if it doesnt exist
-     copy: src=consul dest=/usr/sbin/consul mode=u+rwx
-     become: true
+  - name: Copy Consul binary if it doesnt exist
+    copy: src=consul dest=/usr/sbin/consul mode=u+rwx
+    become: true
 
-   - name: Create consul directory
-     file: path=/etc/consul.d state=directory
-     become: true
+  - name: Create consul directory
+    file: path=/etc/consul.d state=directory
+    become: true
 
-   - name: Copy consul base-config
-     template: src=agent_base_config.json.j2 dest=/etc/consul.d/agent_base_config.json
-     become: true
+  - name: Copy consul base-config
+    template: src=agent_base_config.json.j2 dest=/etc/consul.d/agent_base_config.json
+    become: true
 
-   - name: Copy consul elasticsearch test
-     template: src=elasticsearch.service.json.j2 dest=/etc/consul.d/elasticsearch.service.json
-     become: true
+  - name: Copy consul elasticsearch test
+    template: src=elasticsearch.service.json.j2 dest=/etc/consul.d/elasticsearch.service.json
+    become: true
 
-   - name: Copy consul system service
-     template: src=consul.service.j2 dest=/etc/systemd/system/consul.service
-     become: true
+  - name: Copy consul system service
+    template: src=consul.service.j2 dest=/etc/systemd/system/consul.service
+    become: true
 
-   - name: reload systemd
-     command: /usr/bin/systemctl daemon-reload
-     become: true
+  - name: reload systemd
+    command: /usr/bin/systemctl daemon-reload
+    become: true
 
-   - name: Start consul service
-     service: name=consul state=restarted enabled=yes
-     become: true
+  - name: Start consul service
+    service: name=consul state=restarted enabled=yes
+    become: true
 
-   - name: Register with consul primary server
-     command: /usr/sbin/consul join 10.0.5.97
-     when: inventory_hostname in groups['elasticsearch']
-     become: true
+  - name: Register with consul primary server
+    command: /usr/sbin/consul join {{ groups['consul_ips'][0] }}
+    when: inventory_hostname in groups['elasticsearch']
+    become: true

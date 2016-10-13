@@ -1,5 +1,9 @@
 ---
+consul_ips:
+  - 192.168.20.46
+
 environment_name: us-virginia-1
+fqdn: "{{ ansible_default_ipv4.address }}"
 
 openstack_auth_url: https://us-virginia-1.cloud.cisco.com:5000/v2.0/
 openstack_availability_zone: iad10-1-csx
@@ -11,14 +15,13 @@ openstack_auto_ip: no
 openstack_security_groups:
   - default
 
-remote_user: "cloud-user"
+remote_user: "vagrant"
 datacenter: "oss-va1"
-consul_server_01: 10.0.5.97
-consul_server_02: 10.0.5.117
-consul_server_03: 10.0.5.118
-consul_server_04: 10.0.5.127
-consul_server_05: 10.0.5.128
-
+#consul_server_01: 10.0.5.97
+#consul_server_02: 10.0.5.117
+#consul_server_03: 10.0.5.118
+#consul_server_04: 10.0.5.127
+#consul_server_05: 10.0.5.128
 
 env_os:
   OS_USERNAME: oss-service.gen
