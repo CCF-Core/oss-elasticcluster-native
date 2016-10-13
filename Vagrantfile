@@ -66,6 +66,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       h.vm.box = "centos/7"
       h.vm.network :private_network, :ip => host['ip']
       h.vm.network :forwarded_port, id: "ssh", guest: 22, host: host['ssh_port'], auto_correct: false
+#      h.vm.network :forwarded_port, id: "8300UDP", guest: 8300, host: 8300, auto_correct: false, protocol: "udp"
+#      h.vm.network :forwarded_port, id: "8300TCP", guest: 8300, host: 8300, auto_correct: false, protocol: "tcp"
+#      h.vm.network :forwarded_port, id: "8301UDP", guest: 8301, host: 8301, auto_correct: false, protocol: "udp"
+#      h.vm.network :forwarded_port, id: "8301TCP", guest: 8301, host: 8301, auto_correct: false, protocol: "tcp"
+
 
       unless host['forwards'] == nil
         host['forwards'].each do |f|
@@ -94,11 +99,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
          --dport 9200 -j DNAT --to-destination #{host['ip']}) || true
       eof
 
-     config.vm.provision "ansible" do |ansible|
+    config.vm.provision "ansible" do |ansible|
         ansible.playbook = "ansible/site.yml"
         ansible.inventory_path = "ansible/environments/dev/inventory.yml"
-        ansible.verbose = "vvv"
-        ansible.tags='consul'
-      end
+        #ansible.verbose = "vvv"
+        #ansible.tags='consul'
+    end
   end
 end

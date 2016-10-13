@@ -1,17 +1,9 @@
----
-# This playbook deploys the whole application stack in this site.
-
-- name: Nova playbook
+- name: Deploy Openstack nodes
   hosts: localhost
   become: true
   roles:
      - nova-client
      - instance-destroy
      - instance-create
-  environment:
-    OS_USERNAME: oss-service.gen
-    OS_PASSWORD: a5459a96921c422497aa721bbb1a6c91
-    OS_AUTH_URL: "{{ openstack_auth_url }}"
-    OS_TENANT_NAME: "{{ openstack_tenant }}"
+  environment: "{{ env_os }}"
 
-- include: site.yml

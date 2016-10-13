@@ -3,7 +3,7 @@ consul_ips:
   - 192.168.20.46
 
 environment_name: us-virginia-1
-fqdn: "{{ ansible_default_ipv4.address }}"
+bind_address: "{{ ansible_default_ipv4.address }}"
 
 openstack_auth_url: https://us-virginia-1.cloud.cisco.com:5000/v2.0/
 openstack_availability_zone: iad10-1-csx
@@ -22,9 +22,7 @@ elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elastic
 
 #ES Cluster Settings (unicast discovery)
 es_cluster_name: "ccf-demo"
-es_cluster1: "es-demo1.cisco.com.node.consul"
-es_cluster2: "es-demo1.cisco.com.node.consul"
-es_cluster3: "es-demo1.cisco.com.node.consul"
+consul_suffix: .cisco.com.node.consul
 consul_es_service: "elasticsearch_rc1"
 
 env_os:

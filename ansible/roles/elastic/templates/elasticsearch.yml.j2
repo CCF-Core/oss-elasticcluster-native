@@ -55,7 +55,7 @@ path.logs: /mnt/es/logs
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-network.host: {{ ansible_default_ipv4.address }}
+network.host: {{ bind_address }}
 #
 # Set a custom port for HTTP:
 #
@@ -81,7 +81,9 @@ network.host: {{ ansible_default_ipv4.address }}
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
 # discovery.zen.ping.unicast.hosts: ["host1", "host2"]
-discovery.zen.ping.unicast.hosts: ["{{es_cluster1}}","{{es_cluster2}}","{{es_cluster3}}"]
+
+
+discovery.zen.ping.unicast.hosts: [{{ groups['elasticsearch'] | join(",") }}]
 discovery.zen.minimum_master_nodes: 2
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):

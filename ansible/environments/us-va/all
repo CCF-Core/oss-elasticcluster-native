@@ -1,4 +1,6 @@
 ---
+bind_address: "{{ ansible_eth0.ipv4.address }}"
+
 environment_name: us-virginia-1
 
 openstack_auth_url: https://us-virginia-1.cloud.cisco.com:5000/v2.0/
@@ -11,4 +13,4 @@ openstack_auto_ip: no
 openstack_security_groups:
   - default
 
-remote_user: "cloud-user"
+remote_user: "vagrant"
