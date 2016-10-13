@@ -84,7 +84,7 @@ network.host: {{ bind_address }}
 
 
 discovery.zen.ping.unicast.hosts: [{{ groups['elasticsearch'] | join(",") }}]
-discovery.zen.minimum_master_nodes: 2
+discovery.zen.minimum_master_nodes: 1
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of nodes / 2 + 1):
 #
