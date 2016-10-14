@@ -9,6 +9,6 @@ hosts:
   es-node-01:
     ip: 192.168.20.47
     ssh_port: 8247
-    mem: 4096
+    mem: 5120
     cpus: 2
     hostname: es-node-01

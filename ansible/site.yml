@@ -11,17 +11,10 @@
 
 - name: Install consul server
   remote_user: "{{ remote_user }}"
-  hosts: consul
+  hosts: all
   tags: consul
   roles:
-    - consul-agent
-
-- name: Install consul agent on elasticsearch hosts
-  remote_user: "{{ remote_user }}"
-  hosts: elasticsearch
-  tags: consul
-  roles:
-    - consul-agent
+    - consul
 
 - name: Elasticsearch Nodes
   hosts: elasticsearch

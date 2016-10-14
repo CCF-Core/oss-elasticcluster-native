@@ -7,3 +7,5 @@
      - instance-create
   environment: "{{ env_os }}"
 
+  - include: site.yml
+
