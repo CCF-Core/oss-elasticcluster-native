@@ -1,5 +1,0 @@
-
-
-- name: Copy consul server config
-  template: src=server_config.json.j2 dest=/etc/consul.d/server_config.json
-  become: true

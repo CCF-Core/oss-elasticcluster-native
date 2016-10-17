@@ -1,7 +1,7 @@
 ---
 # tasks file for elastic
 
- - debug: var=vars
+ #- debug: var=vars
 
  - name: Install Java
    yum: name=java-1.8.0-openjdk-headless state=present
