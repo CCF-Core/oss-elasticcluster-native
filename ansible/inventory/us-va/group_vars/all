@@ -31,7 +31,7 @@ openstack_auto_ip: no
 openstack_security_groups:
   - default
 
-envionment:
+environment:
   OS_USERNAME: oss-service.gen
   OS_PASSWORD: a5459a96921c422497aa721bbb1a6c91
   OS_AUTH_URL: "{{ openstack_auth_url }}"
