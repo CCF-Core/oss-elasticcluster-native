@@ -2,3 +2,4 @@
 .vagrant/*
 .DS_Store
 .idea
+ansible/*.retry
