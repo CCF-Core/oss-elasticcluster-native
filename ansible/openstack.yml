@@ -1,0 +1,12 @@
+- name: Deploy Openstack nodes
+  hosts: localhost
+  become: true
+  roles:
+     - nova-client
+     - instance-destroy
+     - instance-create
+  environment: "{{ environment }}"
+
+  - include: consul-server.yml
+  - include: elasticsearch.yml
+

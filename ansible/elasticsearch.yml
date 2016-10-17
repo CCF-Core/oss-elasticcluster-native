@@ -1,0 +1,12 @@
+---
+# Elasticsearch cluster deployment with consul agents
+# To create a new cluster in VA1 and to deploy to that cluster use openstack.yml
+
+- name: Install Elasticsearch
+  remote_user: "{{ remote_user }}"
+  hosts: elasticsearch
+  become: true
+  tags: elastic
+  roles:
+    - consul-agent
+    - elastic

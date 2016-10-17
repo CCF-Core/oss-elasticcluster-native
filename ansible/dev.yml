@@ -1,0 +1,3 @@
+  - include: consul-server.yml
+  - include: elasticsearch.yml
+

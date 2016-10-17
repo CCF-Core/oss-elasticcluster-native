@@ -1,0 +1,38 @@
+environment_name: us-virginia-1
+
+bind_address: "{{ ansible_eth0.ipv4.address }}"
+
+remote_user: "cloud-user"
+
+consul_ips:
+  - 10.0.5.97
+  - 10.0.5.117
+  - 10.0.5.118
+  - 10.0.5.127
+  - 10.0.5.128
+
+datacenter: "oss-va1"
+elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0-rc1.rpm"
+
+#ES Cluster Settings (unicast discovery)
+es_cluster_name: "ccf-user-1"
+
+consul_es_service: "elasticsearch_user_1.cisco.com.node.consul"
+
+environment_name: us-virginia-1
+
+openstack_auth_url: https://us-virginia-1.cloud.cisco.com:5000/v2.0/
+openstack_availability_zone: iad10-1-csx
+openstack_image: 9e252722-8a63-43a5-bee3-c6a88e543513
+openstack_tenant: OSS-20-Testing-64156
+openstack_nodes_flavor: SO3-Large
+openstack_key_name: oss20
+openstack_auto_ip: no
+openstack_security_groups:
+  - default
+
+environment:
+  OS_USERNAME: oss-service.gen
+  OS_PASSWORD: a5459a96921c422497aa721bbb1a6c91
+  OS_AUTH_URL: "{{ openstack_auth_url }}"
+  OS_TENANT_NAME: "{{ openstack_tenant }}"

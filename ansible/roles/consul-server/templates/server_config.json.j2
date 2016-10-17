@@ -1,0 +1,18 @@
+{
+   "datacenter": "{{ datacenter }}",
+   "data_dir": "/opt/consul",
+   "log_level": "INFO",
+   "recursor": "8.8.8.8",
+   "server": true,
+   "bootstrap" : true,
+
+   "addresses": {
+      "http": "0.0.0.0",
+      "dns": "0.0.0.0"
+      },
+
+   "ports":  {
+      "dns": 53
+   }
+
+}

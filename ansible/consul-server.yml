@@ -1,0 +1,11 @@
+---
+# Consul-Cluster deployment
+# To create a new cluster in VA1 and to deploy to that cluster use openstack.yml
+
+- name: Install Consul Server Cluster
+  remote_user: "{{ remote_user }}"
+  hosts: consul
+  become: true
+  tags: consul-server
+  roles:
+    - consul-server
