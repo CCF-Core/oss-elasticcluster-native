@@ -2,7 +2,7 @@
    "datacenter": "{{ datacenter }}",
    "data_dir": "/opt/consul",
    "log_level": "INFO",
-   "start_join": ["{{ consul_ips | join(",") }}"],
+   "start_join": [ {% for ip in consul_ips  %}\"{{ ip }}\"{% if not loop.last %},{% endif %}{% endfor %} ],
    "server": false,
 
    "addresses": {

@@ -5,7 +5,7 @@
      - nova-client
      - instance-destroy
      - instance-create
-  environment: "{{ env_os }}"
+  environment: "{{ envionment }}"
 
   - include: consul-server.yml
   - include: elasticsearch.yml

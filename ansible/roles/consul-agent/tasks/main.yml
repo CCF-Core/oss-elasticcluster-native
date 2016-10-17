@@ -1,13 +1,10 @@
 ---
 # tasks file for consul
 
-  - name: print variables
-    debug: msg="{{ consul_ips[0] }}"
-    tags: debug
-    
   - name: Turn off iptables (firewalld)
     service: name=firewalld state=stopped
     become: true
+    ignore_errors: true
 
   - name: Disable selinux
     selinux: state=disabled
@@ -47,6 +44,5 @@
     become: true
 
   - name: Register with consul primary server
-    command: /usr/sbin/consul join {{ item }}
-    with_items: "{{ consul_ips }}"
+    command: /usr/sbin/consul join "{{ consul_ips[0] }}"
     become: true
