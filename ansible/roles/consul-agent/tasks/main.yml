@@ -1,6 +1,10 @@
 ---
 # tasks file for consul
 
+  - name: print variables
+    debug: msg="{{ consul_ips[0] }}"
+    tags: debug
+    
   - name: Turn off iptables (firewalld)
     service: name=firewalld state=stopped
     become: true

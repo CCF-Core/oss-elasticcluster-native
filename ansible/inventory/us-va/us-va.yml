@@ -1,0 +1,6 @@
+[elasticsearch]
+cd-es-node-01
+cd-es-node-02
+cd-es-node-03
+
+[consul]

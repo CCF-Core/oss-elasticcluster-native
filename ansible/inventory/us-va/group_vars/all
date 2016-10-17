@@ -1,0 +1,21 @@
+---
+environment_name: dev
+
+bind_address: "{{ ansible_eth1.ipv4.address }}"
+
+remote_user: "vagrant"
+
+consul_ips:
+  - 10.0.5.97
+  - 10.0.5.117
+  - 10.0.5.118
+  - 10.0.5.127
+  - 10.0.5.128
+
+datacenter: "us-va"
+elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0-rc1.rpm"
+
+#ES Cluster Settings (unicast discovery)
+es_cluster_name: "ccf-user-1"
+
+consul_es_service: "elasticsearch_user_1.cisco.com.node.consul"
