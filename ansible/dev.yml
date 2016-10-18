@@ -1,12 +1,3 @@
   - include: consul-server.yml
   - include: elasticsearch.yml
-  
-  - name: Install Docker
-    remote_user: "{{ remote_user }}"
-    hosts: dashboard
-    become: true
-    tags: dashboard
-    roles:
-      - docker
-      - dashboard
-
+  - include: dashboard.yml
