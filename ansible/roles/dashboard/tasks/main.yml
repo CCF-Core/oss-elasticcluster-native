@@ -8,13 +8,15 @@
 
 - name: Create dashboard folder
   file: path=~/dashboard state=directory
-  become: True
-  tags: test
 
 - name: Copy files to host
   copy: src=dashboard dest=~/dashboard
-  tags: test
+
+- name: Update ES url for kibana
+  lineinfile: 
+    dest=~/dashboard/dashboard/lib/config/kibana/kibana.yml 
+    regexp='(elasticsearch.* \"http.*)$' 
+    line="elasticsearch.url':' \"http://{{ consul_es_service }}:9200\" " state=present
 
 - name: Compose the dashboard
   shell: cd ~/dashboard/dashboard/lib && docker-compose up -d
-  tags: test
