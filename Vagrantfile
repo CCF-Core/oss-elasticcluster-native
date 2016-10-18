@@ -99,7 +99,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ansible.playbook = "ansible/dev.yml"
         ansible.inventory_path = "ansible/inventory/dev/dev.yml"
         #ansible.verbose = "vvv"
-        ansible.tags='test'
+        #ansible.tags='test'
     end
   end
 end
