@@ -23,7 +23,6 @@
     image: "{{ openstack_image }}"
     meta:
       { DO_NOT_DELETE: 'true', SCRUM_PROJECT_KEY: 'CCF-CORE', MAILER: 'ccf-core@cisco.com' }
-  with_items: "{{ groups['elasticsearch'] }}"
-
+  
 - name: Upating hosts for newly created vms
   include: update-hosts.yml

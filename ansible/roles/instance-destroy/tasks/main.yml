@@ -21,4 +21,3 @@
     name: "{{ item }}"
     image: "{{ openstack_image }}"
     timeout: 300
-  with_items: "{{ groups['elasticsearch'] }}"
