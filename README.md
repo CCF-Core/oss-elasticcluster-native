@@ -44,3 +44,6 @@ The variables that can be edited are located in the group_vars/all:
 **OS_AUTH_URL:**"{{ openstack_auth_url }}"
 
 **OS_TENANT_NAME: **"{{openstack_tenant }}"
+
+
+This Repo uses `git submodules`: to get latest use `git pull --recurse-submodules`
