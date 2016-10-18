@@ -15,4 +15,4 @@ elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elastic
 #ES Cluster Settings (unicast discovery)
 es_cluster_name: "ccf-demo"
 
-consul_es_service: "elasticsearch_rc1.cisco.com.node.consul"
+consul_es_service: "elasticsearch_rc1"

@@ -21,4 +21,5 @@
     name: "{{ item }}"
     image: "{{ openstack_image }}"
     timeout: 300
+  when: item in groups['elasticsearch'] or item in groups['dashboard']
   with_items: "{{ groups['all'] }}"

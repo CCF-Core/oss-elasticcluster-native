@@ -8,7 +8,7 @@
   set_fact:
     etc_hosts: "{{ etc_hosts | default({}) | combine({item.private_v4 : item.name} )}}"
   with_items: "{{ openstack_servers }}"
-  when: item.name in groups['elasticsearch']
+  when: item.name in groups['all']
   delegate_to: localhost
   no_log: True
 

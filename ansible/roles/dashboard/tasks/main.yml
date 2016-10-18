@@ -16,7 +16,7 @@
   lineinfile: 
     dest=~/dashboard/dashboard/lib/config/kibana/kibana.yml 
     regexp='(elasticsearch.* \"http.*)$' 
-    line="elasticsearch.url':' \"http://{{ consul_es_service }}:9200\" " state=present
+    line="elasticsearch.url':' \"http://{{ consul_es_service }}.service.consul:9200\" " state=present
 
 - name: Compose the dashboard
-  shell: cd ~/dashboard/dashboard/lib && docker-compose up -d
+  shell: cd ~/dashboard/dashboard/lib && docker-compose -f docker-compose-va-cd.yml up -d
