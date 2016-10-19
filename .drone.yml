@@ -4,7 +4,7 @@ pipeline:
     image: plugins/git
     recursive: true
     submodule_override:
-      oss-dashboard: https://github.com/CCF-Core/oss-dashboard.git
+      ansible/roles/dashboard/files/dashboard: https://github.com/CCF-Core/oss-dashboard.git
 
   scp:
     image: ccfoss/drone-scp
