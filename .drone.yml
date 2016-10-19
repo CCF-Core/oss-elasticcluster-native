@@ -1,5 +1,11 @@
 #If making changes to this file, sign the file and push.
 pipeline:
+  clone:
+    image: plugins/git
+    recursive: true
+    submodule_override:
+      oss-dashboard: https://github.com/CCF-Core/oss-dashboard.git
+
   scp:
     image: ccfoss/drone-scp
     server: 10.0.5.52
