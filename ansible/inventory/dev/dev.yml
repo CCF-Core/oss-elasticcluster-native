@@ -3,3 +3,6 @@ es-node-01
 
 [consul]
 consul-server-01
+
+[dashboard]
+oss-dashboard-01

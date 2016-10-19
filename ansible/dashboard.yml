@@ -1,0 +1,13 @@
+---
+# Elasticsearch cluster deployment with consul agents
+# To create a new cluster in VA1 and to deploy to that cluster use openstack.yml
+
+  - name: Install dashboard
+    remote_user: "{{ remote_user }}"
+    hosts: dashboard
+    become: true
+    tags: dashboard
+    roles:
+      - consul-agent
+      - docker
+      - dashboard

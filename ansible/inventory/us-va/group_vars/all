@@ -17,7 +17,7 @@ elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elastic
 #ES Cluster Settings (unicast discovery)
 es_cluster_name: "ccf-user-1"
 
-consul_es_service: "elasticsearch_user_1.cisco.com.node.consul"
+consul_es_service: "elasticsearch_user_1"
 
 environment_name: us-virginia-1
 

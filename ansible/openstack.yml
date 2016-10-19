@@ -7,6 +7,7 @@
      - instance-create
   environment: "{{ environment }}"
 
-  - include: consul-server.yml
-  - include: elasticsearch.yml
+#- include: consul-server.yml
+- include: elasticsearch.yml
+- include: dashboard.yml
 

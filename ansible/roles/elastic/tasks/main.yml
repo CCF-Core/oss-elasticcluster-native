@@ -18,7 +18,7 @@
 
  - name: Install Elasticsearch from URL
    yum: name={{ elasticsearch_url }} state=present
-   when: es_status is defined and es_status.rc != 0
+   #when: es_status is defined and es_status.rc != 0
    become: true
 
  - name: Create Elasticsearch data directories
