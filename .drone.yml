@@ -1,0 +1,29 @@
+#If making changes to this file, sign the file and push.
+pipeline:
+  scp:
+    image: ccfoss/drone-scp
+    server: 10.0.5.52
+    user: root
+    target: /tmp/oss-elastic-cluster-native
+    #Add ssh key to secrets
+    #drone secret add --image ccfoss/drone-scp CCF-Core/oss-elasticcluster-native  SSH_PKEY @/home/cloud-user/.ssh/id_rsa
+
+  test:
+    image: plugins/ssh
+    host: 10.0.5.52
+    user: cloud-user
+    port: 22
+    script:
+      - cd /tmp/oss-elastic-cluster-native/oss-elastic-cluster-native/ansible
+      - ansible-playbook openstack.yml -i inventory/us-va/us-va.yml --list-hosts
+
+  notify:
+    image: plugins/slack
+    channel: core-oss-private
+    username: drone
+    template: >
+      build #{{ build.number }} finished with {{ build.status }} status
+    when:
+      status: [ success, failure ]
+    #Add secret
+    #drone secret add --image plugins/slack  CCF-Core/elastic-cluster-native  PLUGIN_WEBHOOK  <webhook url>
