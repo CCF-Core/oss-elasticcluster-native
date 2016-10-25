@@ -23,12 +23,12 @@ pipeline:
       - cd /tmp/oss-elastic-cluster-native/ansible
       - ansible-playbook openstack.yml -i inventory/us-va/us-va.yml --list-hosts
 
-test-cluster:
+  test-cluster:
     image: ccfoss/drone-test
-      default_tests: elasticsearch.bats
-      es_api_ip_port: 10.0.5.76:9200
-      es_user: elastic
-      es_password: changeme
+    default_tests: elasticsearch.bats
+    es_api_ip_port: 10.0.5.76:9200
+    es_user: elastic
+    es_password: changeme
 
   notify:
     image: plugins/slack
