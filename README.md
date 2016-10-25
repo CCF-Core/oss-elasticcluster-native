@@ -1,3 +1,6 @@
+
+[![Build Status](http://173.39.237.153:8983/api/badges/CCF-Core/oss-elasticcluster-native/status.svg)](http://173.39.237.153:8983/CCF-Core/oss-elasticcluster-native)
+
 **OSS Native Elasticsearch Cluster deployment ansible**
 
 This repo is for deploying the native 3 node elasticsearch cluster, based on the 5.x code based on a URL for a RPM.
