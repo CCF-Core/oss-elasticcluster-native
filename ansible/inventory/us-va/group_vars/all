@@ -15,9 +15,9 @@ datacenter: "oss-va1"
 elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.rpm"
 
 #ES Cluster Settings (unicast discovery)
-es_cluster_name: "ccf-user-1"
+es_cluster_name: "ccf-iam"
 
-consul_es_service: "elasticsearch_user_1"
+consul_es_service: "elasticsearch_iam"
 
 environment_name: us-virginia-1
 
