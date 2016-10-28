@@ -10,9 +10,9 @@ consul_ips:
   - 192.168.20.47
 
 datacenter: "oss-dev"
-elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0-rc1.rpm"
+elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.rpm"
 
 #ES Cluster Settings (unicast discovery)
 es_cluster_name: "ccf-demo"
 
-consul_es_service: "elasticsearch_rc1"
+consul_es_service: "elasticsearch_customer0"
