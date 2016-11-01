@@ -14,12 +14,12 @@ consul_ips:
 datacenter: "oss-va1"
 elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.rpm"
 
-# curator_run_frequency in minutes, index_purge_older_than in days
+# curator_run_frequency in minutes
 elasticsearch:
   user: elastic
   pass: changeme
   curator_run_frequency: 5
-  index_purge_older_than: 5
+  index_purge_more_than_gb: 450
 
 #ES Cluster Settings (unicast discovery)
 es_cluster_name: "ccf-iam"
