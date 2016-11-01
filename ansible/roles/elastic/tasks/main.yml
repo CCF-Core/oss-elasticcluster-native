@@ -51,3 +51,5 @@
 
  - name: Restart Elasticsearch Service for x-pack
    service: name=elasticsearch state=restarted enabled=true
+
+ - include: curator.yml
