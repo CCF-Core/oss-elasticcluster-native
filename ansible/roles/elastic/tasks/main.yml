@@ -2,7 +2,7 @@
 # tasks file for elastic
 
  #- debug: var=vars
- 
+
  - name: update vm_max_map_count
    command: /sbin/sysctl -w vm.max_map_count=400000
 
@@ -11,7 +11,11 @@
    tags: 'elastic-repo'
 
  - name: Install Elasticsearch Server Repos
-   template: src=elastic.repo.j2 dest=/etc/yum.repos.d/elastic.repo
+   template: src=elastic.repo dest=/etc/yum.repos.d/elastic.repo
+   tags: 'elastic-repo'
+
+ - name: Install Curator Repo
+   template: src=curator.repo dest=/etc/yum.repos.d/curator.repo
    tags: 'elastic-repo'
 
  - name: Install Java
