@@ -19,7 +19,7 @@ elasticsearch:
   user: elastic
   pass: changeme
   curator_run_frequency: 5
-  index_purge_older_than: 5
+  index_purge_more_than_gb: 450
 
 #ES Cluster Settings (unicast discovery)
 es_cluster_name: "ccf-iam"
