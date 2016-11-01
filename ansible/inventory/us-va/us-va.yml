@@ -1,10 +1,14 @@
 [elasticsearch]
-cd-es-node-01
-cd-es-node-02
-cd-es-node-03
+#cd-es-node-01
+#cd-es-node-02
+#cd-es-node-03
 
 [consul]
 
+[zookeeper]
+oss-control-01
+oss-control-02
+oss-control-03
 
 [dashboard]
-cd-oss-dashboard-01
+#cd-oss-dashboard-01
