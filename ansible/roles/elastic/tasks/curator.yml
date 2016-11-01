@@ -1,0 +1,21 @@
+---
+
+- name: install curator package
+  yum: name=elasticsearch-curator state=present
+
+- name: create curator log directory
+  file: path=/var/log/curator state=directory
+
+- name: create curator /etc directory
+  file: path=/etc/curator state=directory
+
+- name: deploy curator config
+  template: src=curator_config.yml.j2 dest=/etc/curator/config.yml
+
+- name: deploy curator actions
+  template: src=curator_actions.yml.j2 dest=/etc/curator/actions.yml
+
+- name: deploy curator cron job
+  template: src=curator_cron.j2 dest/etc/cron.d/curator
+
+
