@@ -11,11 +11,11 @@
    tags: 'elastic-repo'
 
  - name: Install Elasticsearch Server Repos
-   template: src=elastic.repo dest=/etc/yum.repos.d/elastic.repo
+   copy: src=elastic.repo dest=/etc/yum.repos.d/elastic.repo
    tags: 'elastic-repo'
 
  - name: Install Curator Repo
-   template: src=curator.repo dest=/etc/yum.repos.d/curator.repo
+   copy: src=curator.repo dest=/etc/yum.repos.d/curator.repo
    tags: 'elastic-repo'
 
  - name: Install Java
