@@ -10,4 +10,5 @@
 #- include: consul-server.yml
 - include: elasticsearch.yml
 - include: dashboard.yml
+- include: zookeeper.yml
 
