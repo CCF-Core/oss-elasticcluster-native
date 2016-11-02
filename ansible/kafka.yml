@@ -10,3 +10,4 @@
       - consul-agent
       - docker
       - zookeeper
+      - kafka

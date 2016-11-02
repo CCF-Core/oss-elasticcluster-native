@@ -10,5 +10,10 @@ oss-control-01
 oss-control-02
 oss-control-03
 
+[kafka]
+oss-control-01
+oss-control-02
+oss-control-03
+
 [dashboard]
 #cd-oss-dashboard-01
