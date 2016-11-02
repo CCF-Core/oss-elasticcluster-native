@@ -1,0 +1,5 @@
+- name: Copy docker-compose.yml to host
+  template: src=kafka.yml.j2 dest=~/kafka.yml
+
+- name: Create kafka
+  shell: docker-compose -f ~/kafka.yml up -d
