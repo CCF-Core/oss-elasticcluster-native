@@ -12,6 +12,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
       ZOOKEEPER_INIT_LIMIT: 5
       ZOOKEEPER_SYNC_LIMIT: 2
-      ZOOKEEPER_SERVERS: {% for node in groups['zookeeper']  %}{{ node }}:2888:3888{% if not loop.last %};{% endif %}{% endfor %} 
+      ZOOKEEPER_SERVERS: {% for node in groups['zookeeper']  %}{{ node }}.cisco.com.node.consul:2888:3888{% if not loop.last %};{% endif %}{% endfor %} 
     network_mode: host
-    hostname: {{inventory_hostname}}
+    hostname: {{inventory_hostname}}-zk
