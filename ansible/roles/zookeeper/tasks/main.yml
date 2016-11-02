@@ -1,9 +1,13 @@
 
-- debug: var=server_id
-  tags: abc
-
+- name: Create directories for zookeeper
+  file: path={{ item }} state=directory owner={{ remote_user }} group={{ remote_user }} recurse=true
+  with_items:
+    - /var/lib/zookeeper/data
+    - /var/lib/zookeeper/log
+    - ~/zookeeper
+    
 - name: Copy docker-compose.yml to host
-  template: src=zookeeper.yml.j2 dest=~/zookeeper.yml
+  template: src=zookeeper.yml.j2 dest=~/zookeeper/zookeeper.yml
 
 - name: Create zookeeper services
-  shell: docker-compose -f ~/zookeeper.yml up -d
+  shell: docker-compose -f ~/zookeeper/zookeeper.yml up -d

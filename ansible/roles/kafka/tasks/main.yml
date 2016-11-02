@@ -1,5 +1,12 @@
+
+- name: Create directories for kafka
+  file: path={{ item }} state=directory recurse=true user={{ remote_user }}
+  with_items:
+    - /var/lib/kafka/data
+    - ~/kafka
+
 - name: Copy docker-compose.yml to host
-  template: src=kafka.yml.j2 dest=~/kafka.yml
+  template: src=kafka.yml.j2 dest=~/kafka/kafka.yml
 
 - name: Create kafka
-  shell: docker-compose -f ~/kafka.yml up -d
+  shell: docker-compose -f ~/kafka/kafka.yml up -d

@@ -3,8 +3,11 @@ services:
   {{inventory_hostname}}:
     image: confluentinc/cp-kafka:3.0.1
     network_mode: host
+    restart: true
+    volumes:
+    	- /var/lib/kafka/data:/var/lib/kafka/data
     environment:
       KAFKA_BROKER_ID: {{ kafka_broker_id }}
-      KAFKA_ZOOKEEPER_CONNECT: {% for node in groups['zookeeper']  %}{{ node }}.cisco.com.node.consul:2181{% if not loop.last %},{% endif %}{% 
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ZOOKEEPER_CONNECT: {% for node in groups['zookeeper']  %}{{ node }}.cisco.com.node.consul:2181{% if not loop.last %},{% endif %}{% endfor %} 
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092      
     hostname: {{inventory_hostname}}-kfk
