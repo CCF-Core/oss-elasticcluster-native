@@ -17,3 +17,6 @@ elasticsearch:
   index_purge_more_than_gb: 50
 
 remote_user: "vagrant"
+
+sensu:
+  server: 10.99.95.134
