@@ -7,7 +7,6 @@ consul_ips:
 
 datacenter: "oss-dev"
 
-# curator_run_frequency in minutes, index_purge_older_than in days
 elasticsearch:
   user: elastic
   pass: changeme
@@ -15,5 +14,6 @@ elasticsearch:
   index_purge_older_than: 5
   cluster_name: "ccf-demo"
   consul_service: "elasticsearch_demo"
+  index_purge_more_than_gb: 50
 
 remote_user: "vagrant"
