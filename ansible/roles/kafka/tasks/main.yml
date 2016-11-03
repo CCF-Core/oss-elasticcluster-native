@@ -1,0 +1,13 @@
+
+- name: Create directories for kafka
+  file: path={{ item }} state=directory recurse=true owner=12345 group=12345 mode=0777
+  become: true
+  with_items:
+    - /var/lib/kafka/data
+    - /opt/oss/kafka
+
+- name: Copy docker-compose.yml to host
+  template: src=kafka.yml.j2 dest=/opt/oss/kafka/kafka.yml
+
+- name: Create kafka
+  shell: docker-compose -f /opt/oss/kafka/kafka.yml up -d

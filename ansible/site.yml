@@ -1,0 +1,6 @@
+#Before installing confirm the consul server IP addresses are correct in ansible/inventory/<site>/group_vars/all
+  - include: consul-server.yml
+  - include: elasticsearch.yml
+  #- include: dashboard.yml TODO, Needs to be fixed.
+  - include: kafka.yml
+

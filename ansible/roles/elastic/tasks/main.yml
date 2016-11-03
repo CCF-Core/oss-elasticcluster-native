@@ -52,6 +52,9 @@
  - name: Restart Elasticsearch Service for x-pack
    service: name=elasticsearch state=restarted enabled=true
 
+ - name: Copy consul elasticsearch service definition
+   template: src=elasticsearch.service.json.j2 dest=/etc/consul.d/elasticsearch.service.json
+ 
  - include: curator.yml
    tags: curator
 
