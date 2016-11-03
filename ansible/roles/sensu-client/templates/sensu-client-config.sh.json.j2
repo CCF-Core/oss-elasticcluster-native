@@ -1,0 +1,9 @@
+{
+  "checks": {
+    "{{ item }}": {
+      "command": "/etc/sensu/plugins/{{ item }}.sh 2> /dev/null",
+      "standalone": true,
+      "interval": 60
+    }
+  }
+}

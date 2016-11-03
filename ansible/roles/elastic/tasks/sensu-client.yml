@@ -1,0 +1,15 @@
+---
+
+- name: copy sensu-plugins for elasticsearch
+  copy: src=sensu-plugins/ dest=/etc/sensu/plugins owner=sensu group=sensu mode=0755
+
+- name: deploy sensu check config for elasticsearch
+  template: src=check-elasticsearch.json.j2 dest=/etc/sensu/conf.d/check-elasticsearch.json
+
+- name: copy serverspec test definitions
+  copy: src={{ item }} dest=/etc/serverspec/spec/localhost/{{ item }} mode=0755
+  with_items:
+    - elasticsearch_spec.rb
+
+- name: restart sensu-client
+  service: name=sensu-client state=restarted

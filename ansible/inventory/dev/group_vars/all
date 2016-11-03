@@ -22,4 +22,7 @@ elasticsearch:
 #ES Cluster Settings (unicast discovery)
 es_cluster_name: "ccf-demo"
 
-consul_es_service: "elasticsearch_customer0"
+consul_es_service: "elasticsearch-customer0"
+
+sensu:
+  server: 10.99.95.134
