@@ -4,10 +4,10 @@
   become: true
   with_items:
     - /var/lib/kafka/data
-    - /home/{{ remote_user }}/kafka
+    - /opt/oss/kafka
 
 - name: Copy docker-compose.yml to host
-  template: src=kafka.yml.j2 dest=~/kafka/kafka.yml
+  template: src=kafka.yml.j2 dest=/opt/oss/kafka/kafka.yml
 
 - name: Create kafka
-  shell: docker-compose -f ~/kafka/kafka.yml up -d
+  shell: docker-compose -f /opt/oss/kafka/kafka.yml up -d

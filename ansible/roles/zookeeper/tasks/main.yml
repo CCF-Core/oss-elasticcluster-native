@@ -5,10 +5,10 @@
   with_items:
     - /var/lib/zookeeper/data
     - /var/lib/zookeeper/log
-    - /home/{{ remote_user }}/zookeeper
+    - /opt/oss/zookeeper
     
 - name: Copy docker-compose.yml to host
-  template: src=zookeeper.yml.j2 dest=~/zookeeper/zookeeper.yml
+  template: src=zookeeper.yml.j2 dest=/opt/oss/zookeeper/zookeeper.yml
 
 - name: Create zookeeper services
-  shell: docker-compose -f ~/zookeeper/zookeeper.yml up -d
+  shell: docker-compose -f /opt/oss/zookeeper/zookeeper.yml up -d

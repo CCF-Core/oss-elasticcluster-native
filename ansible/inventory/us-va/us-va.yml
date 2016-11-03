@@ -1,19 +1,23 @@
-[elasticsearch]
-#cd-es-node-01
-#cd-es-node-02
-#cd-es-node-03
 
 [consul]
-
-[zookeeper]
-oss-control-01
-oss-control-02
-oss-control-03
-
-[kafka]
 oss-control-01
 oss-control-02
 oss-control-03
 
 [dashboard]
 #cd-oss-dashboard-01
+
+[elasticsearch]
+#cd-es-node-01
+#cd-es-node-02
+#cd-es-node-03
+
+[kafka]
+#oss-data-01 kfk_broker_id=1
+#oss-data-02 kfk_broker_id=2
+#oss-data-03 kfk_broker_id=3
+
+[zookeeper]
+#oss-control-01 zk_server_id=1
+#oss-control-02 zk_server_id=2
+#oss-control-03 zk_server_id=3

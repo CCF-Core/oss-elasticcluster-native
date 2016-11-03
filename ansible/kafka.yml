@@ -10,4 +10,12 @@
       - consul-agent
       - docker
       - zookeeper
+
+  - name: Install kafka
+    remote_user: "{{ remote_user }}"
+    hosts: kafka
+    tags: kafka
+    roles:
+      - consul-agent
+      - docker
       - kafka
