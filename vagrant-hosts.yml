@@ -1,20 +1,20 @@
 ---
 hosts:
-  consul-server-01:
+  oss-control-01:
     ip: 192.168.20.46
     ssh_port: 8246
     mem: 256
     cpus: 1
-    hostname: consul-server-01
-  es-node-01:
+    hostname: oss-control-01.cisco.com
+  oss-data-01:
     ip: 192.168.20.47
     ssh_port: 8247
     mem: 4096
     cpus: 1
-    hostname: es-node-01
-  oss-dashboard-01:
+    hostname: oss-data-01.cisco.com
+  oss-web-01:
     ip: 192.168.20.48
     ssh_port: 8248
-    mem: 1024
+    mem: 256
     cpus: 1
-    hostname: oss-dashboard-01
+    hostname: oss-web-01.cisco.com

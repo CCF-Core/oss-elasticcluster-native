@@ -13,13 +13,13 @@
 - name: Destroy all openstack_vms
   os_server:
     state: absent
-    availability_zone: "{{ openstack_availability_zone }}"
-    key_name: "{{ openstack_key_name }}"
-    flavor: "{{ openstack_nodes_flavor }}"
-    security_groups: "{{ openstack_security_groups }}"
-    auto_ip: "{{ openstack_auto_ip }}"
+    availability_zone: "{{ openstack.availability_zone }}"
+    key_name: "{{ openstack.key_name }}"
+    flavor: "{{ openstack.nodes_flavor }}"
+    security_groups: "{{ openstack.security_groups }}"
+    auto_ip: "{{ openstack.auto_ip }}"
     name: "{{ item }}"
-    image: "{{ openstack_image }}"
+    image: "{{ openstack.image }}"
     timeout: 300
-  when: item in groups['elasticsearch'] or item in groups['dashboard']
+  when: item != 'localhost'
   with_items: "{{ groups['all'] }}"

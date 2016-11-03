@@ -1,8 +1,15 @@
-[elasticsearch]
-es-node-01
 
 [consul]
-consul-server-01
+oss-control-01
 
 [dashboard]
-oss-dashboard-01
+oss-web-01
+
+[elasticsearch]
+oss-data-01
+
+[kafka]
+oss-data-01  kfk_broker_id=1
+
+[zookeeper]
+oss-control-01 zk_server_id=1

@@ -1,0 +1,23 @@
+---
+# Elasticsearch cluster deployment with consul agents
+# To create a new cluster in VA1 and to deploy to that cluster use openstack.yml
+
+  - name: Install zookeeper
+    remote_user: "{{ remote_user }}"
+    become: true
+    hosts: zookeeper
+    tags: zookeeper
+    roles:
+      - consul-agent
+      - docker
+      - zookeeper
+
+  - name: Install kafka
+    remote_user: "{{ remote_user }}"
+    become: true
+    hosts: kafka
+    tags: kafka
+    roles:
+      - consul-agent
+      - docker
+      - kafka

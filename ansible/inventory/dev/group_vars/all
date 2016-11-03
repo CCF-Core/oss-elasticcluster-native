@@ -1,25 +1,19 @@
----
-environment_name: dev
 
 bind_address: "{{ ansible_eth1.ipv4.address }}"
 
-remote_user: "vagrant"
-
 consul_ips:
   - 192.168.20.46
-  - 192.168.20.47
+  - 8.8.8.8
 
 datacenter: "oss-dev"
-elasticsearch_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.rpm"
 
-# curator_run_frequency in minutes
 elasticsearch:
   user: elastic
   pass: changeme
   curator_run_frequency: 5
+  index_purge_older_than: 5
+  cluster_name: "ccf-demo"
+  consul_service: "elasticsearch_demo"
   index_purge_more_than_gb: 50
 
-#ES Cluster Settings (unicast discovery)
-es_cluster_name: "ccf-demo"
-
-consul_es_service: "elasticsearch_customer0"
+remote_user: "vagrant"
