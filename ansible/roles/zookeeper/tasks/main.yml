@@ -1,10 +1,11 @@
 
 - name: Create directories for zookeeper
-  file: path={{ item }} state=directory owner={{ remote_user }} group={{ remote_user }} recurse=true
+  file: path={{ item }} state=directory owner=12345 group=12345 recurse=true mode=0777
+  become: true
   with_items:
     - /var/lib/zookeeper/data
     - /var/lib/zookeeper/log
-    - ~/zookeeper
+    - /home/{{ remote_user }}/zookeeper
     
 - name: Copy docker-compose.yml to host
   template: src=zookeeper.yml.j2 dest=~/zookeeper/zookeeper.yml
