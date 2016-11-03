@@ -23,7 +23,7 @@
     image: "{{ openstack.image }}"
     meta:
       { DO_NOT_DELETE: 'true', SCRUM_PROJECT_KEY: 'CCF-CORE', MAILER: 'ccf-core@cisco.com' }
-  when: item in groups['elasticsearch'] or item in groups['dashboard']   
+  when: item != 'localhost'
   with_items: "{{ groups['all'] }}"
   
 - name: Upating hosts for newly created vms

@@ -2,11 +2,10 @@
 bind_address: "{{ ansible_eth0.ipv4.address }}"
 
 consul_ips:
-  - 10.0.5.97
-  - 10.0.5.117
-  - 10.0.5.118
-  - 10.0.5.127
-  - 10.0.5.128
+  - 10.0.5.137
+  - 10.0.5.138
+  - 10.0.5.139
+  - 8.8.8.8
 
 datacenter: "oss-va1"
 
@@ -16,8 +15,9 @@ elasticsearch:
   pass: changeme
   curator_run_frequency: 5
   index_purge_older_than: 5
-  cluster_name: "ccf-demo"
-  consul_service: "elasticsearch_demo"
+  cluster_name: "ccf-test"
+  consul_service: "elasticsearch_test"
+  index_purge_more_than_gb: 50
 
 openstack:
   auth_url: https://us-virginia-1.cloud.cisco.com:5000/v2.0/

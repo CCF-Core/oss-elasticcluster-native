@@ -1,0 +1,4 @@
+- include: consul-server.yml
+- include: elasticsearch.yml
+- include: dashboard.yml
+- include: kafka.yml

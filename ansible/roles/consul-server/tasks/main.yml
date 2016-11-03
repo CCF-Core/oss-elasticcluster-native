@@ -3,6 +3,7 @@
 
   - name: Turn off iptables (firewalld)
     service: name=firewalld state=stopped
+    ignore_errors: true
     become: true
 
   - name: Disable selinux
