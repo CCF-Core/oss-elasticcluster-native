@@ -23,7 +23,7 @@ actions:
       value: logstash-
       exclude:
     - filtertype: space
-      disk_space: {{ elastic.index_purge_more_than_gb }}
+      disk_space: {{ elasticsearch.index_purge_more_than_gb }}
       reverse: True
       use_age: False
       source: creation_date

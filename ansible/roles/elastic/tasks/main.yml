@@ -53,3 +53,4 @@
    service: name=elasticsearch state=restarted enabled=true
 
  - include: curator.yml
+   tags: curator
