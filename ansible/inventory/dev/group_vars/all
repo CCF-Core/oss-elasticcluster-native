@@ -19,4 +19,4 @@ elasticsearch:
 remote_user: "vagrant"
 
 sensu:
-  server: 10.99.95.134
+  server: 192.168.20.1
