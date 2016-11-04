@@ -55,5 +55,10 @@
  - name: Copy consul elasticsearch service definition
    template: src=elasticsearch.service.json.j2 dest=/etc/consul.d/elasticsearch.service.json
  
+ - name: Start consul service
+   service: name=consul state=restarted enabled=yes
+   become: true
+
+
  - include: curator.yml
    tags: curator

@@ -6,16 +6,16 @@
 
 - name: Update ES url for kibana
   lineinfile: 
-    dest: ~/dashboard/dashboard/lib/config/kibana/kibana.yml 
-    regexp: '(server \"elasticsearch.*)$' 
-    line: "server {{ consul_es_service }}.service.consul:9200;" 
+    dest: ~/dashboard/dashboard/lib/environments/va/kibana.yml 
+    regexp: '(elasticsearch.* \"http.*)$' 
+    line: "elasticsearch.url: \"http://{{ elasticsearch.consul_service }}.service.consul:9200\" " 
     state: present
 
 - name: Update ES url for NGINX
   lineinfile: 
-    dest: ~/dashboard/dashboard/lib/config/nginx.conf
-    regexp: '(elasticsearch.* \"http.*)$' 
-    line: "elasticsearch.url: \"http://{{ consul_es_service }}.service.consul:9200\" " 
+    dest: ~/dashboard/dashboard/lib/environments/va/nginx.conf
+    regexp: '(server \"elasticsearch.*)$' 
+    line: "server {{ elasticsearch.consul_service }}.service.consul:9200;"     
     state: present
 
 - name: Compose the dashboard

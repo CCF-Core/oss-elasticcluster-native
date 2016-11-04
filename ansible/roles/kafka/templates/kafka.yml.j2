@@ -9,5 +9,8 @@ services:
     environment:
       KAFKA_BROKER_ID: {{ kfk_broker_id }}
       KAFKA_ZOOKEEPER_CONNECT: {% for node in groups['zookeeper']  %}{{ node }}.cisco.com.node.consul:2181{% if not loop.last %},{% endif %}{% endfor %} 
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://{{ bind_address }}:9092
+      KAFKA_ADVERTISED_HOST_NAME: {{ bind_address }}
+      KAFKA_HOST_NAME: {{inventory_hostname}}-kfk
+      KAFKA_LOG4J_ROOT_LOGLEVEL: DEBUG
     hostname: {{inventory_hostname}}-kfk
