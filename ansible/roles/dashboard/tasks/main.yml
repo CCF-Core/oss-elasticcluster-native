@@ -2,21 +2,10 @@
   file: path=~/dashboard state=directory
 
 - name: Copy files to host
-  copy: src=dashboard dest=~/dashboard
-
-- name: Update ES url for kibana
-  lineinfile: 
-    dest: ~/dashboard/dashboard/lib/environments/va/kibana.yml 
-    regexp: '(elasticsearch.* \"http.*)$' 
-    line: "elasticsearch.url: \"http://{{ elasticsearch.consul_service }}.service.consul:9200\" " 
-    state: present
-
-- name: Update ES url for NGINX
-  lineinfile: 
-    dest: ~/dashboard/dashboard/lib/environments/va/nginx.conf
-    regexp: '(server \"elasticsearch.*)$' 
-    line: "server {{ elasticsearch.consul_service }}.service.consul:9200;"     
-    state: present
+  copy: src=dashboard/dashboard/lib dest=~/dashboard
 
 - name: Compose the dashboard
-  shell: cd ~/dashboard/dashboard/lib && docker-compose -f docker-compose-va-cd.yml up -d
+  shell: cd ~/dashboard && docker-compose -f docker-compose-va-cd.yml up -d
+  environment:
+    CONSUL: {{consul_ips[0]}}:8500
+    CUSTOMER_ID: {{ elasticsearch.cluster_name }}

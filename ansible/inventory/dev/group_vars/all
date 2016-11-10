@@ -5,6 +5,8 @@ consul_ips:
   - 192.168.20.46
   - 8.8.8.8
 
+customer_id: test
+
 datacenter: "oss-dev"
 
 elasticsearch:
@@ -12,8 +14,8 @@ elasticsearch:
   pass: changeme
   curator_run_frequency: 5
   index_purge_older_than: 5
-  cluster_name: "ccf-demo"
-  consul_service: "elasticsearch_demo"
+  cluster_name: "ccf-{{ customer_id }}"
+  consul_service: "elasticsearch_{{ customer_id }}"
   index_purge_more_than_gb: 50
 
 remote_user: "vagrant"

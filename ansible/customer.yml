@@ -1,0 +1,22 @@
+#Before installing confirm the consul server IP addresses are correct in ansible/inventory/<site>/group_vars/all
+ # Elasticsearch cluster deployment with consul agents
+# To create a new cluster in VA1 and to deploy to that cluster use openstack.yml
+
+- name: Install Elasticsearch
+  remote_user: "{{ remote_user }}"
+  hosts: elasticsearch
+  become: true
+  tags: elastic
+  roles:
+    - consul-agent
+    - elastic
+
+- name: Install dashboard
+  remote_user: "{{ remote_user }}"
+  hosts: dashboard
+  become: true
+  tags: dashboard
+  roles:
+    - consul-agent
+    - docker
+    - dashboard

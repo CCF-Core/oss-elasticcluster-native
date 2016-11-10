@@ -7,6 +7,8 @@ consul_ips:
   - 10.0.5.139
   - 8.8.8.8
 
+customer_id: test
+
 datacenter: "oss-va1"
 
 # curator_run_frequency in minutes
@@ -15,8 +17,8 @@ elasticsearch:
   pass: changeme
   curator_run_frequency: 5
   index_purge_older_than: 5
-  cluster_name: "ccf-test"
-  consul_service: "elasticsearch_test"
+  cluster_name: "ccf-{{ customer_id }}"
+  consul_service: "elasticsearch_{{ customer_id }}"
   index_purge_more_than_gb: 450
 
 openstack:
