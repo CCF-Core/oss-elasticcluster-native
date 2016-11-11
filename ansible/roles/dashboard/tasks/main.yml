@@ -5,7 +5,4 @@
   copy: src=dashboard/lib dest=/opt/dashboard
 
 - name: Compose the dashboard
-  shell: cd /opt/dashboard && docker-compose -f docker-compose-va-cd.yml up -d
-  environment:
-    CONSUL: "{{consul_ips[0]}}:8500"
-    CUSTOMER_ID: "{{ elasticsearch.cluster_name }}"
+  shell: cd /opt/dashboard/lib && docker-compose -f docker-compose-va-cd.yml up -d
