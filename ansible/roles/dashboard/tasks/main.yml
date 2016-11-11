@@ -1,11 +1,11 @@
 - name: Create dashboard folder
-  file: path=~/dashboard state=directory
+  file: path=/opt/dashboard state=directory
 
 - name: Copy files to host
-  copy: src=dashboard/dashboard/lib dest=~/dashboard
+  copy: src=dashboard/lib dest=/opt/dashboard
 
 - name: Compose the dashboard
-  shell: cd ~/dashboard && docker-compose -f docker-compose-va-cd.yml up -d
+  shell: cd /opt/dashboard && docker-compose -f docker-compose-va-cd.yml up -d
   environment:
-    CONSUL: {{consul_ips[0]}}:8500
-    CUSTOMER_ID: {{ elasticsearch.cluster_name }}
+    CONSUL: "{{consul_ips[0]}}:8500"
+    CUSTOMER_ID: "{{ elasticsearch.cluster_name }}"
