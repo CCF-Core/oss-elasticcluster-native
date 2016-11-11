@@ -11,3 +11,10 @@
 
 - name: Create kafka
   shell: docker-compose -f /opt/oss/kafka/kafka.yml up -d
+
+ - name: Copy consul kafka service definition
+   template: src=kafka.service.json.j2 dest=/etc/consul.d/kafka.service.json
+ 
+ - name: Restart consul service
+   service: name=consul state=restarted enabled=yes
+   become: true

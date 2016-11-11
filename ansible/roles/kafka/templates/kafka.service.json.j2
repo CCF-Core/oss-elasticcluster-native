@@ -1,0 +1,16 @@
+{
+ "service": {
+ "name": "kafka",
+ "tags": ["kafka"],
+ "port": 9092,
+ "timeout": "10s"
+},
+
+"check":
+    {
+      "id": "Kafka Service Port",
+      "name": "Kafka port 9092",
+      "tcp": "{{ bind_address }}:9092",
+      "interval": "10s"
+    }
+}
