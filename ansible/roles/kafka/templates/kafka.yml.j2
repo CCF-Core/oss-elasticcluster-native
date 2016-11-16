@@ -1,6 +1,6 @@
 version: '2'
 services:
-  {{inventory_hostname}}:
+  {{inventory_hostname}}-kfk:
     image: confluentinc/cp-kafka:3.0.1
     network_mode: host
     restart: always
@@ -14,3 +14,6 @@ services:
       KAFKA_HOST_NAME: {{inventory_hostname}}-kfk
       KAFKA_LOG4J_ROOT_LOGLEVEL: DEBUG
     hostname: {{inventory_hostname}}-kfk
+
+  {{inventory_hostname}}-ls:
+    image: ccofss/logstash

@@ -10,6 +10,29 @@
 - name: Install shade
   pip: name=shade
 
+- name: delete test volume
+  os_volume:
+    state: absent
+    availability_zone: "{{ openstack.volume_availability_zone }}"
+    size: 40
+    display_name: es-data-"{{ item }}"
+    volume_type: PIB-2500
+  ignore_errors: true
+  when: item != 'localhost'
+  with_items: "{{ groups['all'] }}"
+  tags: vol
+
+- name: create test volume
+  os_volume:
+    state: present
+    availability_zone: "{{ openstack.volume_availability_zone }}"
+    size: 40
+    display_name: es-data-"{{ item }}"
+    volume_type: PIB-2500
+  when: item != 'localhost'
+  with_items: "{{ groups['all'] }}"
+  tags: vol
+
 - name: Create all openstack_vms
   os_server:
     state: present
@@ -23,8 +46,39 @@
     image: "{{ openstack.image }}"
     meta:
       { DO_NOT_DELETE: 'true', SCRUM_PROJECT_KEY: 'CCF-CORE', MAILER: 'ccf-core@cisco.com' }
+    volumes:
+      - es-data-"{{ item }}"
   when: item != 'localhost'
   with_items: "{{ groups['all'] }}"
-  
+
+- name: Shutdown instances
+  os_server_actions:
+   action: stop
+   server: "{{ item }}"
+   timeout: 200
+  when: item != 'localhost'
+  with_items: "{{ groups['all'] }}"
+  tags: attach
+
+- name: attach volume to host
+  os_server_volume:
+    state: present
+    availability_zone: "{{ openstack.volume_availability_zone }}"
+    server: "{{ item }}"
+    volume: es-data-"{{ item }}"
+    device: /dev/vdc
+  when: item != 'localhost'
+  with_items: "{{ groups['all'] }}"
+  tags: attach
+
+- name: Start instances
+  os_server_actions:
+   action: start
+   server: "{{ item }}"
+   timeout: 200
+  when: item != 'localhost'
+  with_items: "{{ groups['all'] }}"
+  tags: attach
+
 - name: Upating hosts for newly created vms
   include: update-hosts.yml

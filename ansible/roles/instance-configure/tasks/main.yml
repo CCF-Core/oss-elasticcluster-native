@@ -1,0 +1,9 @@
+---
+- name: install lvm
+  yum: name=lvm2 state=present
+
+- name: create volume groups
+  lvg:  vg=esdata pvs=/dev/vdc state=present
+
+- name: create volume
+  lvol: lv=esdata vg=esdata size=100%FREE

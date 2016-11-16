@@ -7,4 +7,10 @@
      - instance-create
   environment: "{{ environment }}"
 
+- name: Deploy Openstack nodes
+  become: true
+  roles:
+     - instance-configure
+  environment: "{{ environment }}"
+
 #After the nodes are deployed, update inventory/<environment>/group_vars/all to add consul server IP and then run site.yml
