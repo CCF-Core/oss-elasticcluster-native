@@ -6,4 +6,12 @@
   lvg:  vg=esdata pvs=/dev/vdc state=present
 
 - name: create volume
-  lvol: lv=esdata vg=esdata size=100%FREE
+  lvol: lv=esdata vg=esdata size=100%FREE state=present 
+  ignore_errors: true
+
+- name: create file system
+  filesystem: fstype=ext4 dev=/dev/esdata/esdata
+
+
+- name: mount volume
+  mount: name=/esdata src=/dev/esdata/esdata fstype=ext4 state=mounted dump=1 passno=2

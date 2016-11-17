@@ -9,6 +9,8 @@
 
 - name: Deploy Openstack nodes
   become: true
+  hosts: all
+  tags: volume
   roles:
      - instance-configure
   environment: "{{ environment }}"
