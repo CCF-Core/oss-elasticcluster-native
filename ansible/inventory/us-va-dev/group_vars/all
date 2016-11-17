@@ -1,0 +1,41 @@
+
+bind_address: "{{ ansible_eth0.ipv4.address }}"
+
+consul_ips:
+  - 10.0.6.54
+  - 10.0.6.55
+  - 10.0.6.56
+  - 8.8.8.8
+
+customer_id: nwss
+
+datacenter: "oss-va1"
+
+# curator_run_frequency in minutes
+elasticsearch:
+  user: elastic
+  pass: changeme
+  curator_run_frequency: 5
+  index_purge_older_than: 5
+  cluster_name: "ccf-{{ customer_id }}"
+  consul_service: "elasticsearch_{{ customer_id }}"
+  index_purge_more_than_gb: 450
+
+openstack:
+  auth_url: https://us-virginia-1.cloud.cisco.com:5000/v2.0/
+  availability_zone: iad10-1-csx
+  image: 9e252722-8a63-43a5-bee3-c6a88e543513
+  tenant: OSS-20-Dev-80574
+  nodes_flavor: SO3-XLarge
+  key_name: oss-dev
+  auto_ip: no
+  security_groups:
+    - default
+
+environment:
+  OS_USERNAME: oss-service.gen
+  OS_PASSWORD: a5459a96921c422497aa721bbb1a6c91
+  OS_AUTH_URL: "{{ openstack.auth_url }}"
+  OS_TENANT_NAME: "{{ openstack.tenant }}"
+
+remote_user: "cloud-user"
