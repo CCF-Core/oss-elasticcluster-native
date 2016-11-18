@@ -1,0 +1,18 @@
+version: '2'
+services:
+  consul:
+    image: ccfoss/consul
+    network_mode: host
+    restart: always
+    volumes:
+      - /consul/data
+      - /consul/config
+    ports:
+      - "53:53"    
+      - "8400:8400"
+      - "8500:8500"
+      - "53:53/udp"
+    environment:
+     CONSUL_ALLOW_PRIVILEGED_PORTS=true
+    command: "agent -server -bind {{ bind_address }}"
+    hostname: consul
