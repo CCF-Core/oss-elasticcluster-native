@@ -7,7 +7,7 @@
 - name: Disable selinux
   selinux: state=disabled
 
-- name: Create dashboard folder
+- name: Create consul folder
   file: path=/opt/consul state=directory
 
 - name: Copy files to host
