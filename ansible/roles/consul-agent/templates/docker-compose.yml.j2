@@ -9,3 +9,11 @@ services:
       - CONSUL
     command: "consul agent -config-dir /etc/consul.d/ -bind {{ bind_address }}  -datacenter {{ datacenter }}"
     hostname: consul-agent
+
+  # registrator:
+  #   image: gliderlabs/registrator
+  #   network_mode: host
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock
+  #   command: "consul://localhost:8500"
+  #   hostname: registrator
