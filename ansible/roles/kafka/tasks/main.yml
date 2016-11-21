@@ -9,20 +9,13 @@
 - name: Copy docker-compose.yml to host
   template: src=kafka.yml.j2 dest=/opt/oss/kafka/kafka.yml
 
-- name: Create kafka
+- name: Compose kafka docker containers
   shell: docker-compose -f /opt/oss/kafka/kafka.yml up -d
-
-- name: Copy consul kafka service definition
-  template: src=kafka.service.json.j2 dest=/etc/consul.d/kafka.service.json
  
-- name: Register consul service
+- name: Register kafka service in consul
   uri:
-    url: https://{{consul_ips[0]}}:8500/v1/catalog/register
+    url: http://{{consul_ips[0]}}:8500/v1/catalog/register
     method: PUT
     body: "{{ lookup('template','kafka.service.json.j2') }}"
-    status_code: 201
+    status_code: 200
     body_format: json
-
-# - name: Restart consul service
- #   service: name=consul state=restarted enabled=yes
- #   become: true
