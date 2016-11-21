@@ -6,6 +6,6 @@ services:
     ports:
       - "8500:8500"
     environment:
-      - "CONSUL={{consul_ips[0]}}:8500"
-    command: "consul agent -config-dir /etc/consul.d/ -bind {{ bind_address }}"
+      - CONSUL
+    command: "consul agent -config-dir /etc/consul.d/ -bind {{ bind_address }}  -datacenter {{ datacenter }}"
     hostname: consul-agent

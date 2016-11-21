@@ -9,11 +9,13 @@
   become: true
   tags: elastic
   roles:
+    - docker
     - consul-agent
     - elastic
   environment:
       CONSUL: "{{consul_ips[0]}}:8500"
       CUSTOMER_ID: "{{ customer_id }}"
+      DATACENTER: "{{ datacenter }}"
 
 - name: Install dashboard
   remote_user: "{{ remote_user }}"
@@ -21,9 +23,10 @@
   become: true
   tags: dashboard
   roles:
-    - consul-agent
     - docker
+    - consul-agent
     - dashboard
   environment:
       CONSUL: "{{consul_ips[0]}}:8500"
       CUSTOMER_ID: "{{ customer_id }}"
+      DATACENTER: "{{ datacenter }}"
