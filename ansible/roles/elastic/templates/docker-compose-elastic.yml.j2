@@ -1,0 +1,25 @@
+version: '2'
+services:
+  {{ inventory_hostname }}-es:
+    image: ccfoss/elasticsearch
+    network_mode: host
+    restart: unless-stopped
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - "{{ next_open_port.stdout | int }}:9200"
+    environment:
+      - "ES_JAVA_OPTS: -Xms2g -Xmx2g"
+      - CONSUL
+      - CUSTOMER_ID
+      - "MASTER:{{ is_master_node }}"
+      - "DATA:{{ is_data_node }}"
+      - "NODE_NAME:{{ node_type }}-{{ node_id }}"
+      - "ES_PORT:{{ next_open_port.stdout | int }}"

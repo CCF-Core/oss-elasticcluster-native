@@ -1,0 +1,19 @@
+
+- name: get next free port between 9200 9299
+  script: get_next_port.sh
+  register: next_open_port
+
+- name: using port
+  debug: msg={{next_open_port.stdout}}
+
+- name: Create directories for elasticsearch
+  file: path={{ item }} state=directory recurse=true owner=12345 group=12345 mode=0777
+  become: true
+  with_items:
+    - /opt/oss/elasticsearch/{{ customer_id }}
+
+- name: Copy docker-compose.yml to host
+  template: src=docker-compose-elastic.yml.j2 dest=/opt/oss/elasticsearch/{{ customer_id }}/{{ node_type }}-docker-compose-elastic.yml
+
+- name: Compose elasticsearch docker containers
+  shell: docker-compose -f /opt/oss/elasticsearch/{{ customer_id }}/{{ node_type }}-docker-compose-elastic.yml up -d

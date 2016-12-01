@@ -1,64 +1,42 @@
----
-# tasks file for elastic
 
- #- debug: var=vars
+- name: Get master node todo count
+  uri: 
+    url: "http://{{consul_ips[0]}}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/master_node_count_todo?raw" 
+    return_content: yes
+  register: master_node_count_todo
 
- - name: update vm_max_map_count
-   command: /sbin/sysctl -w vm.max_map_count=400000
+- name: Get data node todo count
+  uri: 
+    url: "http://{{consul_ips[0]}}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/data_node_count_todo?raw" 
+    return_content: yes
+  register: data_node_count_todo
 
- - name: Install Elasticsearch Repo Key
-   rpm_key: key=https://packages.elastic.co/GPG-KEY-elasticsearch state=present
-   tags: 'elastic-repo'
+- name: Run compose if todo > 0
+  include: compose.yml
+  vars: 
+    node_type: "master"
+    node_id: "{{ master_node_count_todo.content }}"
+    is_master_node: true
+    is_data_node: false
+  when: "{{ master_node_count_todo.content | int }} > 0"
 
- - name: Install Elasticsearch Server Repos
-   copy: src=elastic.repo dest=/etc/yum.repos.d/elastic.repo
-   tags: 'elastic-repo'
+- name: Run compose if todo > 0
+  include: compose.yml
+  vars: 
+    node_type: "data"
+    node_id: "{{ data_node_count_todo.content }}"
+    is_master_node: false
+    is_data_node: true
+  when: "{{ data_node_count_todo.content | int }} > 0"
 
- - name: Install Curator Repo
-   copy: src=curator.repo dest=/etc/yum.repos.d/curator.repo
-   tags: 'elastic-repo'
+- name: Set todo master count
+  uri:
+    url: "http://{{consul_ips[0]}}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/master_node_count_todo"
+    method: PUT
+    body: "{{ master_node_count_todo.content | int  - 1}}"  
 
- - name: Install Java
-   yum: name=java-1.8.0-openjdk-headless state=present
-
- - name: Install Elasticsearch
-   yum: name=elasticsearch-5.0.0 state=present
-
- - name: Create Elasticsearch data directories
-   file: path=/mnt/es/data state=directory owner=elasticsearch
-
- - name: Create Elasticsearch log directories
-   file: path=/mnt/es/logs state=directory owner=elasticsearch
-
- - name: Elasticsearch config file edits
-   template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml
-
- - name: Ensure elastic environment variables are set.
-   blockinfile:
-       dest: /etc/sysconfig/elasticsearch
-       marker: "# <!-- {mark} ANSIBLE MANAGED BLOCK -->"
-       block: |
-               MAX_OPEN_FILES=65535
-               MAX_LOCKED_MEMORY=unlimited
-               ES_JAVA_OPTS="-Xms4g -Xmx4g"
-
- - name: Start Elasticsearch Service
-   service: name=elasticsearch state=restarted enabled=true
-
- - name: Install Elasticsearch x-pack
-   command: /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack
-   ignore_errors: True
-
- - name: Restart Elasticsearch Service for x-pack
-   service: name=elasticsearch state=restarted enabled=true
-
- - name: Copy consul elasticsearch service definition
-   template: src=elasticsearch.service.json.j2 dest=/etc/consul.d/elasticsearch.service.json
- 
- - name: Start consul service
-   service: name=consul state=restarted enabled=yes
-   become: true
-
-
- - include: curator.yml
-   tags: curator
+- name: Set todo data count
+  uri:
+    url: "http://{{consul_ips[0]}}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/data_node_count_todo"
+    method: PUT
+    body: "{{ data_node_count_todo.content | int - 1}} "  
