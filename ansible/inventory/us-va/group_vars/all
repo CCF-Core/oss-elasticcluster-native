@@ -21,44 +21,6 @@ elasticsearch:
   consul_service: "elasticsearch_{{ customer_id }}"
   index_purge_more_than_gb: 450
 
-step -1.
-  c1
-    # of cluster nodes: 1....n  (this is master)
-    # of replicas: 1...n
-    Amount of storage for retention: xGB
-    Length of retention: nDays
-    # of data nodes: 1...n (if cluster nodes ==1, then both master and data will be same container)
-    mem cap for each container: XGB
-step 1.
-    x-pack: y/n
-    if x-pack:
-      uname: auto gen
-      pwd: auto gen
-      svc uname: auto gen
-      svc pwd: auto gen
-    else:
-      no creds
-
-step 0.
-  Inv:
-    3 Nodes for ES
-    calculator says: 10 containers (5 masters, 5 data)
-      - Not supported: Since we dont want to run multiple data containers on the same host for the same customer.
-      - Max we can do is: ES host count (1..3 masters, 1..3 data)
-    If docker not installed, then error out.
-    round robin to each host and deploy for that customer finding a port that is open.
-      masters first and then data containers
-    Kibana/Dashboard container will be deployed on a open port on the dashboard server
-
-  c1.index size per container: 50gb
-  c1.max index size: 300gb
-
-  6 data nodes...
-  3 hosts
-  2 data nodes on each...
-
-
-
 openstack:
   auth_url: https://us-virginia-1.cloud.cisco.com:5000/v2.0/
   availability_zone: iad10-1-csx
