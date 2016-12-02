@@ -14,12 +14,13 @@ services:
     cap_add:
       - IPC_LOCK
     ports:
-      - "{{ next_open_port.stdout | int }}:9200"
+      - "{{ next_open_port_1.stdout | int }}:9200"
+      - "{{ next_open_port_2.stdout | int }}:9300"
     environment:
-      - "ES_JAVA_OPTS: -Xms2g -Xmx2g"
-      - CONSUL
-      - CUSTOMER_ID
-      - "MASTER:{{ is_master_node }}"
-      - "DATA:{{ is_data_node }}"
-      - "NODE_NAME:{{ node_type }}-{{ node_id }}"
-      - "ES_PORT:{{ next_open_port.stdout | int }}"
+       ES_JAVA_OPTS: -Xms2g -Xmx2g
+       CONSUL: $CONSUL
+       CUSTOMER_ID: $CUSTOMER_ID
+       ES_MASTER: "{{ is_master_node | lower }}"
+       ES_DATA: "{{ is_data_node | lower }}"
+       NODE_NAME: "{{ node_type }}-{{ node_id }}"
+       ES_PORT: {{ next_open_port.stdout | int }}

@@ -1,10 +1,17 @@
 
-- name: get next free port between 9200 9299
-  script: get_next_port.sh
-  register: next_open_port
+- name: update vm_max_map_count
+  command: /sbin/sysctl -w vm.max_map_count=400000
 
-- name: using port
-  debug: msg={{next_open_port.stdout}}
+- name: get next free port between 9200 9299
+  script: get_next_port.sh 9200 9299
+  register: next_open_port_1
+
+- name: get next free port between 9300 9399
+  script: get_next_port.sh 9300 9399
+  register: next_open_port_2
+
+- name: using ports
+  debug: msg="{{next_open_port_1.stdout}}:{{next_open_port_2.stdout}}
 
 - name: Create directories for elasticsearch
   file: path={{ item }} state=directory recurse=true owner=12345 group=12345 mode=0777

@@ -1,13 +1,11 @@
 #!/bin/bash
-set -x
-lower_port=953
-upper_port=955
+lower_port=$1
+upper_port=$2
 ports="$(netstat -anlp | grep 'LISTEN ')"
-    for (( port = lower_port ; port <= upper_port ; port++ )); do
-        #nc -l -p "$port" 2>/dev/null && break 2
-        echo $ports | grep $port
-        if [[ "$?" != 0 ]]; then
-            echo $port
- 	    break;
-        fi
-    done
+for (( port = lower_port ; port <= upper_port ; port++ )); do
+    echo $ports | grep $port
+    if [[ "$?" != 0 ]]; then
+        echo $port
+	    break;
+    fi
+done
