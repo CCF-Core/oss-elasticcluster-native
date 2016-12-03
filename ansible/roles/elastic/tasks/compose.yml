@@ -3,11 +3,13 @@
   command: /sbin/sysctl -w vm.max_map_count=400000
 
 - name: get next free port between 9200 9299
-  script: get_next_port.sh {{ min_port }} {{ max_port }}
+  script: get_next_port.sh {{ min_port_1 }} {{ max_port_1 }}
+  become: true
   register: next_open_port_1
 
 - name: get next free port between 9300 9399
-  script: get_next_port.sh {{ min_port }} {{ max_port }}
+  script: get_next_port.sh {{ min_port_2 }} {{ max_port_2 }}
+  become: true
   register: next_open_port_2
 
 - name: using ports
@@ -24,3 +26,6 @@
 
 - name: Compose elasticsearch docker containers
   shell: docker-compose -f /opt/oss/elasticsearch/{{ customer_id }}/{{ node_type }}-docker-compose-elastic.yml up -d
+
+- name: wait till es container is up
+  wait_for: port={{next_open_port_1.stdout}} delay=10 timeout=300

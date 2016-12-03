@@ -23,4 +23,4 @@ services:
        ES_MASTER: "{{ is_master_node | lower }}"
        ES_DATA: "{{ is_data_node | lower }}"
        NODE_NAME: "{{ node_type }}-{{ node_id }}"
-       ES_PORT: {{ next_open_port.stdout | int }}
+       ES_PORT: {{ next_open_port_1.stdout | int }}
