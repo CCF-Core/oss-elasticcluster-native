@@ -4,6 +4,10 @@
   service: name=firewalld state=stopped
   ignore_errors: true
 
+- name: Turn off consul
+  service: name=consul state=stopped
+  ignore_errors: true
+
 - name: Disable selinux
   selinux: state=disabled
 

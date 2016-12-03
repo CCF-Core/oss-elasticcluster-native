@@ -19,7 +19,7 @@ services:
     environment:
        ES_JAVA_OPTS: -Xms2g -Xmx2g
        CONSUL: {{ bind_address }}:8500
-       CUSTOMER_ID: $CUSTOMER_ID
+       CUSTOMER_ID: {{ customer_id }}
        ES_MASTER: "{{ is_master_node | lower }}"
        ES_DATA: "{{ is_data_node | lower }}"
        NODE_NAME: "{{ node_type }}-{{ node_id }}"

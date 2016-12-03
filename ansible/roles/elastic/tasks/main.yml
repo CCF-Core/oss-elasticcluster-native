@@ -18,6 +18,8 @@
     node_id: "{{ master_node_count_todo.content }}"
     is_master_node: true
     is_data_node: false
+    min_port: 9200
+    max_port: 9299
   when: "{{ master_node_count_todo.content | int }} > 0"
 
 - name: Run compose if todo > 0
@@ -27,6 +29,8 @@
     node_id: "{{ data_node_count_todo.content }}"
     is_master_node: false
     is_data_node: true
+    min_port: 9300
+    max_port: 9399
   when: "{{ data_node_count_todo.content | int }} > 0"
 
 - name: Set todo master count
