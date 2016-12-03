@@ -2,7 +2,7 @@ version: '2'
 services:
   {{ inventory_hostname }}-es:
     image: ccfoss/elasticsearch
-    network_mode: host
+    #network_mode: host Need to be able to bind to a diff port on the host
     restart: unless-stopped
     ulimits:
       memlock:
