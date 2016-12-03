@@ -59,6 +59,34 @@
    service: name=consul state=restarted enabled=yes
    become: true
 
+ - name: Add x-pack license
+   uri:
+    url: http://{{ bind_address }}:9200/_xpack/license
+    method: PUT
+    body: "{{ lookup('file','license.json') }}"
+    status_code: 200
+    body_format: json
 
+
+- name: Generate random password
+  register: password="{{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}"
+
+ - name: Update password for elastic user
+   uri:
+    url: http://{{ bind_address }}:9200/_xpack/security/user/elastic/_password
+    method: PUT
+    body: '{ "password": {{ password }} }'
+    user: elastic
+    password: changeme
+    status_code: 200
+    body_format: json
+
+ - name: Save passwd in consul
+   uri:
+    url: http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password
+    method: PUT
+    body: '{{ password }}'
+    status_code: 200
+  
  - include: curator.yml
    tags: curator
