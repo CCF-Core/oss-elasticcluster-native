@@ -20,7 +20,7 @@ pipeline:
     user: cloud-user
     port: 22
     script:
-      - cd /tmp/oss-elastic-cluster-native/ansible
+      - cd /tmp/oss-elastic-cluster-native/oss-elasticcluster-native/ansible
       - ansible-playbook openstack.yml -i inventory/us-va/us-va.yml --list-hosts
 
   test-cluster:
