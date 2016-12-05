@@ -5,12 +5,12 @@
 #oss-control-03
 
 [dashboard]
-#oss-web-01
+delete-oss-web-01
 
 [elasticsearch]
 #oss-kafka-01
-#oss-kafka-02
-oss-kafka-03
+oss-kafka-02
+#oss-kafka-03
 
 [kafka]
 #oss-kafka-01 kfk_broker_id=1

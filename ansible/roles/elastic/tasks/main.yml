@@ -56,39 +56,9 @@
  - name: Wait for elastic
    wait_for: port=9200 delay=1 timeout=60 host="{{ bind_address }}"
 
- - name: Register elasticsearch service in consul
-   uri:
-    url: http://{{consul_ips[0]}}:8500/v1/agent/service/register 
-    method: PUT
-    body: "{{ lookup('template','elasticsearch.service.json.j2') }}"
-    status_code: 200
-    body_format: json
- 
- - name: Install license
-   uri:
-     url: "http://{{ bind_address }}:9200/_xpack/license"
-     method: PUT
-     user: elastic
-     password: changeme
-     body: "{{ lookup('file', 'license.json') }}"
-     body_format: json
-     return_content: yes
+ - name: Setup accounts & install license
+   include: setup_cluster.yml
+   run_once: true
 
- - name: Get password from consul
-   uri: 
-    url: "http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password?raw" 
-    return_content: true
-   register: password
-  
- - name: Update password for elastic user
-   uri:
-    url: http://{{ bind_address }}:9200/_xpack/security/user/elastic/_password
-    method: PUT
-    user: elastic
-    password: changeme
-    body: "{{ lookup('template', 'pwd.json.j2') }}"
-    body_format: json
-   register: output
-  
  - include: curator.yml
    tags: curator
