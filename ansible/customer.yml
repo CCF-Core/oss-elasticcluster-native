@@ -11,8 +11,11 @@
       register: password
 
     - name: Save password
-      uri: url="http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password" method="PUT" body="{{ password.stdout }}"
-      register: master_node_count
+      uri: 
+        url: "http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password" 
+        method: "PUT" 
+        body: "{{ password.stdout }}"
+        status_code: 200
   tags: reg
 
 - name: Install Elasticsearch
@@ -21,7 +24,7 @@
   become: true
   tags: elastic
   roles:
-    #- docker
+    - docker
     - consul-agent
     - elastic
   environment:

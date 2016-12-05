@@ -1,16 +1,6 @@
 {
- "service": {
  "name": "{{ elasticsearch.consul_service }}",
  "tags": ["es"],
  "port": 9200,
  "timeout": "10s"
-},
-
-"check":
-    {
-      "id": "Elaststicsearch Service Port",
-      "name": "ES port 9200",
-      "tcp": "{{ bind_address }}:9200",
-      "interval": "10s"
-    }
 }

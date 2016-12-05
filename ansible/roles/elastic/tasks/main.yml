@@ -21,8 +21,8 @@
  - name: Install Java
    yum: name=java-1.8.0-openjdk-headless state=present
 
- - name: Install Elasticsearch
-   yum: name=elasticsearch-5.0.0 state=present
+ - name: Install Elasticsearch (installing with url as yum repo has 5.0.0-alpha5)
+   yum: name="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.rpm" state=present
 
  - name: Create Elasticsearch data directories
    file: path=/mnt/es/data state=directory owner=elasticsearch
@@ -47,69 +47,48 @@
 
  - name: Install Elasticsearch x-pack
    command: /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack
-   ignore_errors: True
+   become: true
+   ignore_errors: true
 
  - name: Restart Elasticsearch Service for x-pack
    service: name=elasticsearch state=restarted enabled=true
 
- - name: Copy consul elasticsearch service definition
-   template: src=elasticsearch.service.json.j2 dest=/etc/consul.d/elasticsearch.service.json
- 
- - name: Start consul service
-   service: name=consul state=restarted enabled=yes
-   become: true
- 
  - name: Wait for elastic
    wait_for: port=9200 delay=1 timeout=60 host="{{ bind_address }}"
-   tags: reg
 
- - name: Add x-pack license
-   copy: src=license.json dest=/tmp 
-   tags: test
+ - name: Register elasticsearch service in consul
+   uri:
+    url: http://{{consul_ips[0]}}:8500/v1/agent/service/register 
+    method: PUT
+    body: "{{ lookup('template','elasticsearch.service.json.j2') }}"
+    status_code: 200
+    body_format: json
  
  - name: Install license
-   shell: curl -XPUT -u elastic:changeme "http://{{ bind_address }}:9200/_xpack/license" -d @license.json
-   args:
-     chdir: /tmp
-   tags: test
-
- #- name: Install license
-   #shell: curl -XPUT -u elastic:changeme "http://{{ bind_address }}:9200/_xpack/license" -d @license.json 
-  # uri:
-  #  url: "http://{{ bind_address }}:9200/_xpack/license"
-  #  method: PUT
-  #  user: elastic
-  #  password: changeme
-  #  body: "{{ lookup('file', 'license.json') }}"
-  #  body_format: json
-  #  return_content: yes
-  # ignore_errors: true
-  # register: output
-  # tags: test
+   uri:
+     url: "http://{{ bind_address }}:9200/_xpack/license"
+     method: PUT
+     user: elastic
+     password: changeme
+     body: "{{ lookup('file', 'license.json') }}"
+     body_format: json
+     return_content: yes
 
  - name: Get password from consul
-   uri: url="http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password?raw" return_content=true
+   uri: 
+    url: "http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password?raw" 
+    return_content: true
    register: password
-   tags: reg
   
- - name: print pwd
-   debug: msg="{{ password }}"
-   tags: reg
-
- - name: copy pwd file
-   template: src="pwd.json.j2" dest="/tmp/pwd.json"
-   tags: reg
-
  - name: Update password for elastic user
-   shell: curl -XPUT -u elastic:changeme "http://{{ bind_address }}:9200/_xpack/security/user/elastic/_password" -d @pwd.json
-   args:
-     chdir: "/tmp"
+   uri:
+    url: http://{{ bind_address }}:9200/_xpack/security/user/elastic/_password
+    method: PUT
+    user: elastic
+    password: changeme
+    body: "{{ lookup('template', 'pwd.json.j2') }}"
+    body_format: json
    register: output
-   tags: reg
-
- - name: print output
-   debug: var=output
-   tags: reg
-
+  
  - include: curator.yml
    tags: curator

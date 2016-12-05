@@ -9,8 +9,8 @@
 
 [elasticsearch]
 #oss-kafka-01
-oss-kafka-02
-#oss-kafka-03
+#oss-kafka-02
+oss-kafka-03
 
 [kafka]
 #oss-kafka-01 kfk_broker_id=1
