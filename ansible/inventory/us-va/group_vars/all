@@ -7,7 +7,7 @@ consul_ips:
   - 10.0.5.58
   - 8.8.8.8
 
-customer_id: test
+customer_id: devtest3
 
 datacenter: "oss-va1"
 

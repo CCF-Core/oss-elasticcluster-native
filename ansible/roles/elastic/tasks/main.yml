@@ -58,35 +58,58 @@
  - name: Start consul service
    service: name=consul state=restarted enabled=yes
    become: true
+ 
+ - name: Wait for elastic
+   wait_for: port=9200 delay=1 timeout=60 host="{{ bind_address }}"
+   tags: reg
 
  - name: Add x-pack license
-   uri:
-    url: http://{{ bind_address }}:9200/_xpack/license
-    method: PUT
-    body: "{{ lookup('file','license.json') }}"
-    status_code: 200
-    body_format: json
+   copy: src=license.json dest=/tmp 
+   tags: test
+ 
+ - name: Install license
+   shell: curl -XPUT -u elastic:changeme "http://{{ bind_address }}:9200/_xpack/license" -d @license.json
+   args:
+     chdir: /tmp
+   tags: test
 
+ #- name: Install license
+   #shell: curl -XPUT -u elastic:changeme "http://{{ bind_address }}:9200/_xpack/license" -d @license.json 
+  # uri:
+  #  url: "http://{{ bind_address }}:9200/_xpack/license"
+  #  method: PUT
+  #  user: elastic
+  #  password: changeme
+  #  body: "{{ lookup('file', 'license.json') }}"
+  #  body_format: json
+  #  return_content: yes
+  # ignore_errors: true
+  # register: output
+  # tags: test
 
-- name: Generate random password
-  register: password="{{ lookup('password', '/tmp/passwordfile chars=ascii_letters') }}"
+ - name: Get password from consul
+   uri: url="http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password?raw" return_content=true
+   register: password
+   tags: reg
+  
+ - name: print pwd
+   debug: msg="{{ password }}"
+   tags: reg
+
+ - name: copy pwd file
+   template: src="pwd.json.j2" dest="/tmp/pwd.json"
+   tags: reg
 
  - name: Update password for elastic user
-   uri:
-    url: http://{{ bind_address }}:9200/_xpack/security/user/elastic/_password
-    method: PUT
-    body: '{ "password": {{ password }} }'
-    user: elastic
-    password: changeme
-    status_code: 200
-    body_format: json
+   shell: curl -XPUT -u elastic:changeme "http://{{ bind_address }}:9200/_xpack/security/user/elastic/_password" -d @pwd.json
+   args:
+     chdir: "/tmp"
+   register: output
+   tags: reg
 
- - name: Save passwd in consul
-   uri:
-    url: http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password
-    method: PUT
-    body: '{{ password }}'
-    status_code: 200
-  
+ - name: print output
+   debug: var=output
+   tags: reg
+
  - include: curator.yml
    tags: curator

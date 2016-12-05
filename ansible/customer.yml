@@ -3,13 +3,25 @@
 # To create a new cluster in VA1 and to deploy to that cluster use openstack.yml
 
 
+- name: Save customer ES password in consul
+  hosts: localhost
+  tasks:
+    - name: Generate random password
+      shell: openssl rand -hex 8
+      register: password
+
+    - name: Save password
+      uri: url="http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password" method="PUT" body="{{ password.stdout }}"
+      register: master_node_count
+  tags: reg
+
 - name: Install Elasticsearch
   remote_user: "{{ remote_user }}"
   hosts: elasticsearch
   become: true
   tags: elastic
   roles:
-    - docker
+    #- docker
     - consul-agent
     - elastic
   environment:
