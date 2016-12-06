@@ -8,8 +8,8 @@
 delete-oss-web-01
 
 [elasticsearch]
-#oss-kafka-01
-oss-kafka-02
+oss-kafka-01
+#oss-kafka-02
 #oss-kafka-03
 
 [kafka]

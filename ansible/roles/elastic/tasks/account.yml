@@ -1,7 +1,7 @@
 
-- name: Generate random password for elastic user
+- name: Generate random password for user
   shell: openssl rand -hex 8
-  register: es_pwd
+  register: pwd
 
 - name: Create user
   uri:
@@ -14,7 +14,6 @@
     return_content: yes
   when: create == true
 
-
 - name: Update user
   uri:
     url: http://{{ bind_address }}:9200/_xpack/security/user/{{ user }}/_password
@@ -26,10 +25,9 @@
     return_content: yes
   when: create != true
 
-
 - name: Save password in consul for user
   uri: 
     url: "http://{{ consul_ips[0] }}:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/{{ user }}/password" 
     method: "PUT" 
-    body: "{{ es_pwd.stdout }}"
+    body: "{{ pwd.stdout }}"
     status_code: 200
