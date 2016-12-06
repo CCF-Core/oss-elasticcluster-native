@@ -1,0 +1,52 @@
+---
+
+# TODO(chrchand): Will we be using chronyd?
+# - name: start chronyd
+#   service: name=chronyd state=restarted enabled=true
+
+# Leaving this in, but commented, as we will need to add these back once we get physical hardware
+# - name: ensure packages required for Sensu checks on physical hosts are installed
+#   yum: name={{ item }} state=present
+#   with_items:
+#     - "smartmontools"
+#     - "storcli"
+#     - "ipmitool"
+#   when: hostvars[inventory_hostname]['facter_virtual'] is defined and hostvars[inventory_hostname]['facter_virtual'] == 'physical'
+
+# - name: grant the sensu user sudoers rights to run smartctl and storcli64 on physical nodes
+#   copy: src=sensu-sudoers dest=/etc/sudoers.d/sensu-sudoers mode=744
+#   when: hostvars[inventory_hostname]['facter_virtual'] is defined and hostvars[inventory_hostname]['facter_virtual'] == 'physical'
+
+# - name: Validate sudoers file got updated
+#   lineinfile: dest=/etc/default/sensu regexp='^EMBEDDED_RUBY=' line='EMBEDDED_RUBY=true'
+
+# TODO(chrchand): Leaving these in, as well
+# - name: deploy Sensu client configs for Bash-based checks on physical nodes
+#   template: src=sensu-client-config.sh.json.j2 dest=/etc/sensu/conf.d/{{ item }}.json
+#   with_items:
+#     - "raid-status"
+#     - "check-smart"
+#   when: hostvars[inventory_hostname]['facter_virtual'] is defined and hostvars[inventory_hostname]['facter_virtual'] == 'physical'
+
+# - name: deploy Sensu client configs for Python-based checks on physical nodes
+#   template: src=sensu-client-config.py.json.j2 dest=/etc/sensu/conf.d/{{ item }}.json
+#   with_items:
+#     - "check-ipmi-sensors"
+#   when: hostvars[inventory_hostname]['facter_virtual'] is defined and hostvars[inventory_hostname]['facter_virtual'] == 'physical'
+
+# 05/10/2016 (chrchand) - Moving to Ruby-based check for IPMI, but leaving this in case we need to install client config for other Ruby-based checks
+# - name: deploy Sensu client configs for Ruby-based checks on physical nodes
+#   template: src=sensu-client-config.rb.json.j2 dest=/etc/sensu/conf.d/{{ item }}.json
+#   with_items:
+#     - "check-ipmi-sensors"
+#   when: hostvars[inventory_hostname]['facter_virtual'] is defined and hostvars[inventory_hostname]['facter_virtual'] == 'physical'
+
+# 05/10/2016 (chrchand) - Moving to Python-based check for IPMI, but leaving this in case we need to install gems for other checks
+# - name: install Ruby gems required for Sensu plugins
+#   gem: name={{ item }} executable=/opt/sensu/embedded/bin/gem user_install=no state=present
+#   with_items:
+#     - rubyipmi
+#   when: hostvars[inventory_hostname]['facter_virtual'] is defined and hostvars[inventory_hostname]['facter_virtual'] == 'physical'
+
+
+

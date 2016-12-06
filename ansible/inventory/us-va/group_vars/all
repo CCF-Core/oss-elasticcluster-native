@@ -40,3 +40,6 @@ environment:
   OS_TENANT_NAME: "{{ openstack.tenant }}"
 
 remote_user: "cloud-user"
+
+sensu:
+  server: monitoring.cisco.com.node.consul

@@ -1,0 +1,16 @@
+{
+   "client": {
+    "name": "{{ sensu.server }}",
+    "address": "{{ bind_address }}",
+    "subscriptions": [
+      "elasticsearch"    ]
+  },
+    "redis": {
+    "host": "{{ sensu.server }}",
+    "port": 6379
+  },
+  "transport": {
+    "name": "redis",
+    "reconnect_on_error": true
+  }
+}

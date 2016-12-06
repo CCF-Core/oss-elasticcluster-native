@@ -1,0 +1,9 @@
+{
+  "checks": {
+    "check-fstab-mounts": {
+      "command": "/etc/sensu/plugins/check-fstab-mounts.rb  --types xfs,ext3,ext4",
+      "standalone": true,
+      "interval": 60
+    }
+  }
+}
