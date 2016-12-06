@@ -1,0 +1,3 @@
+#Before installing confirm the consul server IP addresses are correct in ansible/inventory/<site>/group_vars/all
+  - include: consul-server.yml
+  - include: kafka.yml

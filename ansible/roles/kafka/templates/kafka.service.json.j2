@@ -1,0 +1,18 @@
+{
+  "Node": "{{ inventory_hostname }}",
+  "Address": "{{ bind_address }}",
+  "Service": {
+    "Service": "kafka",
+    "Tags": [
+      "kafka"
+    ],
+    "Port": 9092,
+    "timeout": "10s"
+  },
+  "Check": {
+    "CheckID": "service:kafka",
+    "Name": "Kafka health check",
+    "tcp": "{{ bind_address }}:9092",
+    "interval": "10s"
+  }
+}

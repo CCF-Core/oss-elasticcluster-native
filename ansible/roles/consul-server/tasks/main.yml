@@ -1,35 +1,17 @@
 ---
 # tasks file for consul
+- name: Turn off iptables (firewalld)
+  service: name=firewalld state=stopped
+  ignore_errors: true
 
-  - name: Turn off iptables (firewalld)
-    service: name=firewalld state=stopped
-    ignore_errors: true
-    become: true
+- name: Disable selinux
+  selinux: state=disabled
 
-  - name: Disable selinux
-    selinux: state=disabled
-    become: true
+- name: Create consul folder
+  file: path=/opt/consul state=directory
 
-  - name: Copy Consul binary if it doesnt exist
-    copy: src=consul dest=/usr/sbin/consul mode=u+rwx
-    become: true
+- name: Copy files to host
+  template: src=docker-compose.yml.j2 dest=/opt/consul/
 
-  - name: Create consul directory
-    file: path=/etc/consul.d state=directory
-    become: true
-
-  - name: Copy consul system service
-    template: src=consul.service.j2 dest=/etc/systemd/system/consul.service
-    become: true
-
-  - name: reload systemd
-    command: /usr/bin/systemctl daemon-reload
-    become: true
-
-  - name: Copy consul server config
-    template: src=server_config.json.j2 dest=/etc/consul.d/server_config.json
-    become: true
-
-  - name: Start consul service
-    service: name=consul state=restarted enabled=yes
-    become: true
+- name: Compose consul server
+  shell: cd /opt/consul && docker-compose -f docker-compose.yml up -d
