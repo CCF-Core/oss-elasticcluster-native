@@ -21,6 +21,7 @@
     auto_ip: "{{ openstack.auto_ip }}"
     name: "{{ item }}"
     image: "{{ openstack.image }}"
+    network: "{{ openstack.network }}"
     meta:
       { DO_NOT_DELETE: 'true', SCRUM_PROJECT_KEY: 'CCF-CORE', MAILER: 'ccf-core@cisco.com' }
   when: item != 'localhost'

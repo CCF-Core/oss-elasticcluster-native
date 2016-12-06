@@ -1,0 +1,34 @@
+
+- name: Register elasticsearch service in consul
+  uri:
+    url: http://localhost:8500/v1/agent/service/register 
+    method: PUT
+    body: "{{ lookup('template','elasticsearch.service.json.j2') }}"
+    status_code: 200
+    body_format: json
+
+- name: Install license
+  uri:
+   url: "http://{{ bind_address }}:9200/_xpack/license"
+   method: PUT
+   user: elastic
+   password: changeme
+   body: "{{ lookup('file', 'license.json') }}"
+   body_format: json
+   run_once: true
+   return_content: yes
+
+- include: account.yml
+  vars:
+    user: "{{ item }}"
+    create: true
+  with_items:
+    - "{{ customer_id }}"
+
+- include: account.yml
+  vars:
+    user: "{{ item }}"
+    create: false
+  with_items:
+    - "kibana"
+    - "elastic" #Change elastic user's password last

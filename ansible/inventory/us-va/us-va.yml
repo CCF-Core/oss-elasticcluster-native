@@ -1,8 +1,8 @@
 
 [consul]
-oss-control-01
-oss-control-02
-oss-control-03
+#oss-control-01
+#oss-control-02
+#oss-control-03
 
 [dashboard]
 oss-web-01

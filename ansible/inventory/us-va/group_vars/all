@@ -29,6 +29,7 @@ openstack:
   nodes_flavor: SO3-Large
   key_name: oss20
   auto_ip: no
+  network: 17a917f0-30df-403d-a13d-cab5037f987e
   security_groups:
     - default
 

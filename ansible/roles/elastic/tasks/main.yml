@@ -21,8 +21,8 @@
  - name: Install Java
    yum: name=java-1.8.0-openjdk-headless state=present
 
- - name: Install Elasticsearch
-   yum: name=elasticsearch-5.0.0 state=present
+ - name: Install Elasticsearch (installing with url as yum repo has 5.0.0-alpha5)
+   yum: name="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.0.0.rpm" state=present
 
  - name: Create Elasticsearch data directories
    file: path=/mnt/es/data state=directory owner=elasticsearch
@@ -47,18 +47,18 @@
 
  - name: Install Elasticsearch x-pack
    command: /usr/share/elasticsearch/bin/elasticsearch-plugin install x-pack
-   ignore_errors: True
+   become: true
+   ignore_errors: true
 
  - name: Restart Elasticsearch Service for x-pack
    service: name=elasticsearch state=restarted enabled=true
 
- - name: Copy consul elasticsearch service definition
-   template: src=elasticsearch.service.json.j2 dest=/etc/consul.d/elasticsearch.service.json
- 
- - name: Start consul service
-   service: name=consul state=restarted enabled=yes
-   become: true
+ - name: Wait for elastic
+   wait_for: port=9200 delay=1 timeout=60 host="{{ bind_address }}"
 
+ - name: Setup accounts & install license
+   include: setup_cluster.yml
+   run_once: true
 
  - include: curator.yml
    tags: curator
