@@ -1,0 +1,9 @@
+{
+  "checks": {
+    "{{ item }}": {
+      "command": "/etc/sensu/plugins/{{ item }}.rb",
+      "standalone": true,
+      "interval": 60
+    }
+  }
+}

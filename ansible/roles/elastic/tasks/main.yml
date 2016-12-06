@@ -62,3 +62,6 @@
 
  - include: curator.yml
    tags: curator
+
+ - include: sensu-client.yml
+   tags: sensu_client

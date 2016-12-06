@@ -1,0 +1,89 @@
+---
+
+- name: Setup Sensu Repo
+  copy: src=sensu_repo dest=/etc/yum.repos.d/sensu_repo.repo
+
+- name: Install Sensu and Client
+  yum: name={{ item }} state=present
+  with_items:
+    - sensu
+    - gcc-c++
+    - libstdc++-devel
+
+- name: install required packages
+  yum: name={{ item }} state=present
+  with_items:
+    - net-tools
+    - rsync
+    - rubygems
+
+- name: Install sensu plugin
+  shell: /opt/sensu/embedded/bin/gem install {{ item }} --no-ri --no-rdoc
+  with_items:
+    - sensu-plugin
+    - rest-client
+
+- name: Install Client Configuration
+  template: src=client-json.j2 dest=/etc/sensu/conf.d/client.json
+
+- name: copy Sensu plugins
+  copy: src=plugins/ dest=/etc/sensu/plugins owner=sensu group=sensu mode=0755
+
+- name: set sensu user/group for /etc/sensu/plugins
+  file: path=/etc/sensu/plugins recurse=yes owner=sensu group=sensu mode=0755
+- name: install Ruby gems required for Sensu plugins
+  gem: name={{ item }} executable=/opt/sensu/embedded/bin/gem user_install=no state=present
+  with_items:
+    - rspec
+    - serverspec
+
+- name: deploy Ruby-based Sensu client configs that do not require parameters
+  template: src=sensu-client-config.rb.json.j2 dest=/etc/sensu/conf.d/{{ item }}.json
+  with_items:
+    - check-cpu
+    - check-disk-fail
+    - check-disk
+    - check-load
+    # - check-chrony
+
+- name: deploy check-fstab-mounts check config
+  copy: src=check-fstab-mounts.json dest=/etc/sensu/conf.d/check-fstab-mounts.json
+
+- name: deploy Python-based Sensu client configs that do not require parameters
+  template: src=sensu-client-config.py.json.j2 dest=/etc/sensu/conf.d/{{ item }}.json
+  with_items:
+    - check-memory
+
+- name: ensure serverspec directory exists
+  file: dest=/etc/serverspec/spec/localhost state=directory
+
+  # serverspec directory path needs to be 755 in order to allow Sensu user to see and run spec files
+- name: set permissions on /etc/serverspec
+  command: chmod -R 755 /etc/serverspec
+
+- name: deploy spec_helper.rb file
+  copy: src=serverspec/spec_helper.rb dest=/etc/serverspec/spec/spec_helper.rb mode=0755
+
+  # chrchand: Leaving this as an example of how to deploy multiple serverspec files
+  # Teams will likely want to make role/service/app specific tests
+  # e.g.: they might have Apache on multiple different server types, but all need to
+  # check the same things (ports, service is alive, etc)
+  # While it might be overkill for a single test definition, it allows reuse from within
+  # the same Ansible codebase
+- name: copy serverspec test definitions
+  copy: src=serverspec/localhost/{{ item }} dest=/etc/serverspec/spec/localhost/{{ item }} mode=0755
+  with_items:
+    - sshd_spec.rb
+    # - logstash_client_spec.rb
+    # - collectd_spec.rb
+    - sensu_client_spec.rb
+
+- name: deploy check-serverspec-test config for Sensu
+  copy: src=check-serverspec-template.json dest=/etc/sensu/conf.d/check-serverspec-tests.json mode=0644
+
+# Putting a bogus "when" here as a placeholder until we can get something to check for physical vs virtual servers
+- include: physical_server_checks.yml
+  when: 1 == 2
+
+- name: start sensu-client
+  service: name=sensu-client state=restarted enabled=true

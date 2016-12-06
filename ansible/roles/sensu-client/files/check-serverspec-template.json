@@ -1,0 +1,9 @@
+{
+  "checks": {
+    "check-serverspec-tests": {
+      "command": "/etc/sensu/plugins/check-serverspec.rb -d /etc/serverspec",
+      "standalone": true,
+      "interval": 60
+    }
+  }
+}
