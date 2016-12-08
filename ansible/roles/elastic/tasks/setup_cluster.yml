@@ -12,7 +12,7 @@
     url: "http://{{ bind_address }}:9200/_xpack/license"
     method: PUT
     user: elastic
-    password: "{{ elastic_pass.stdout | default('changeme') }}"
+    password: "{{ elastic_pass.content | default('changeme') }}"
     body: "{{ lookup('file', 'license.json') }}"
     body_format: json
     run_once: true
