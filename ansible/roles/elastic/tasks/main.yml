@@ -3,6 +3,11 @@
 
  #- debug: var=vars
 
+ - name: Retrieve elastic user's password from Consul (if present)
+   uri:
+     url: "http://{{ groups['consul'][0] }}.cisco.com:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password?raw"
+   register: elastic_pass
+
  - name: update vm_max_map_count
    command: /sbin/sysctl -w vm.max_map_count=400000
 
@@ -64,4 +69,4 @@
    tags: curator
 
  - include: sensu-client.yml
-   tags: sensu_client
+   tags: sensu-client

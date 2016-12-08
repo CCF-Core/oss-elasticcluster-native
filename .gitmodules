@@ -1,3 +1,3 @@
 [submodule "ansible/roles/dashboard/files/dashboard"]
 	path = ansible/roles/dashboard/files/dashboard
-	url = git@github.com:CCF-Core/oss-dashboard.git
+	url = git@github.com:CCF-Core/oss-dashboard

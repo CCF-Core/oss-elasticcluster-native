@@ -50,7 +50,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.private_key_path = [ "~/.vagrant.d/insecure_private_key" ]
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = true
-  config.hostmanager.manage_guest = true
+  # config.hostmanager.manage_guest = true
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
   config.vm.synced_folder ".", "/home/vagrant/oss-elasticcluster-native"
@@ -94,12 +94,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         || iptables -t nat -A PREROUTING -p tcp -d $(/sbin/ifconfig eth0 | grep -e 'inet [^ ]*' | awk '{print $2}')\
          --dport 9200 -j DNAT --to-destination #{host['ip']}) || true
       eof
-
-    config.vm.provision "ansible" do |ansible|
+  end
+  config.vm.provision "ansible" do |ansible|
         ansible.playbook = "ansible/site.yml"
         ansible.inventory_path = "ansible/inventory/dev/dev.yml"
         #ansible.verbose = "vvv"
         #ansible.tags='test'
-    end
   end
 end

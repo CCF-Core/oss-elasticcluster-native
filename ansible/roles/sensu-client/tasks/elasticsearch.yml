@@ -1,0 +1,22 @@
+---
+
+- name: Installing dev tools (required for rest-client gem)
+  yum: name=gcc-c++,libstdc++-devel state=present
+
+- name: install required gems for ElasticSearch-specific plugins
+  yum: name={{ item }} state=latest
+  with_items:
+    - rubygem-rest-client
+
+- name: deploy configuration for ElasticSearch-specific Sensu checks
+  template: src=elasticsearch/check-es-template.json.j2 dest=/etc/sensu/conf.d/{{ item }}.json
+  with_items:
+    - check-es-cluster-status
+    - check-es-file-descriptors
+    - check-es-node-status
+    - check-es-heap
+
+- name: copy serverspec test definitions for ElasticSearch
+  copy: src=serverspec/localhost/{{ item }} dest=/etc/serverspec/spec/localhost/{{ item }}
+  with_items:
+    - elasticsearch_spec.rb

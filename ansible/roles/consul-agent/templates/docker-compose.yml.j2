@@ -7,7 +7,7 @@ services:
       - "8500:8500"
     environment:
       - CONSUL
-    command: "consul agent -config-dir /etc/consul.d/ -bind {{ bind_address }}  -datacenter {{ datacenter }}"
+    command: "consul agent -config-dir /etc/consul.d/ -bind {{ bind_address }}  -datacenter oap"
     hostname: consul-agent
 
   # registrator:

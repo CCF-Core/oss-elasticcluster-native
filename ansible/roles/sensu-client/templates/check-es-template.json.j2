@@ -1,0 +1,9 @@
+{
+  "checks": {
+    "{{ item }}": {
+      "command": "/etc/sensu/plugins/elasticsearch/{{ item }}.rb --host {{ bind_address }} --user {{ elasticsearch.user }} --password {{ elasticsearch.password }}",
+      "standalone": true,
+      "interval": 60
+    }
+  }
+}

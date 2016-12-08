@@ -96,7 +96,7 @@ class ESFileDescriptors < Sensu::Plugin::Check::CLI
   end
 
   def acquire_open_fds
-    stats = get_es_resource('/_nodes/stats/process')
+    stats = get_es_resource('/_nodes/_local/stats?process=true')
     begin
       keys = stats['nodes'].keys
       stats['nodes'][keys[0]]['process']['open_file_descriptors'].to_i
@@ -106,7 +106,7 @@ class ESFileDescriptors < Sensu::Plugin::Check::CLI
   end
 
   def acquire_max_fds
-    info = get_es_resource('/_nodes/stats/process')
+    info = get_es_resource('/_nodes/_local/stats?process=true')
     begin
       keys = info['nodes'].keys
       info['nodes'][keys[0]]['process']['max_file_descriptors'].to_i

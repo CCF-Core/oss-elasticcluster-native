@@ -9,14 +9,14 @@
 
 - name: Install license
   uri:
-   url: "http://{{ bind_address }}:9200/_xpack/license"
-   method: PUT
-   user: elastic
-   password: changeme
-   body: "{{ lookup('file', 'license.json') }}"
-   body_format: json
-   run_once: true
-   return_content: yes
+    url: "http://{{ bind_address }}:9200/_xpack/license"
+    method: PUT
+    user: elastic
+    password: "{{ elastic_pass.stdout | default('changeme') }}"
+    body: "{{ lookup('file', 'license.json') }}"
+    body_format: json
+    run_once: true
+    return_content: yes
 
 - include: account.yml
   vars:

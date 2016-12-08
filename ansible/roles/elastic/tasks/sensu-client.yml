@@ -1,5 +1,11 @@
 ---
 
+- name: Retrieve elastic user's password from Consul (if present)
+  uri:
+    url: "http://{{ groups['consul'][0] }}.cisco.com:8500/v1/kv/{{ customer_id }}/settings/elasticsearch/elastic/password?raw"
+    return_content: yes
+  register: elastic_pass
+
 - name: copy sensu-plugins for elasticsearch
   copy: src=sensu-plugins/ dest=/etc/sensu/plugins owner=sensu group=sensu mode=0755
 

@@ -1,25 +1,25 @@
 {
   "checks": {
     "check-es-node-status": {
-      "command":"/etc/sensu/plugins/check-es-node-status.rb --user {{ elasticsearch.user }} --pass {{ elasticsearch.pass }} --host {{ bind_address }}",
+      "command":"/etc/sensu/plugins/check-es-node-status.rb --user {{ elasticsearch.user }} --pass {{  elastic_pass.content | default('changeme') }} --host {{ bind_address }}",
       "interval":60,
       "standalone" : true,
       "subscribers":["elasticsearch"]
     },
     "check-es-cluster-status": {
-      "command":"/etc/sensu/plugins/check-es-cluster-status.rb --user {{ elasticsearch.user }} --pass {{ elasticsearch.pass }} --host {{ bind_address }}",
+      "command":"/etc/sensu/plugins/check-es-cluster-status.rb --user {{ elasticsearch.user }} --pass {{  elastic_pass.content | default('changeme') }} --host {{ bind_address }}",
       "interval":60,
       "standalone" : true,
       "subscribers":["elasticsearch"]
     },
     "check-es-file-descriptors": {
-      "command":"/etc/sensu/plugins/check-es-file-descriptors.rb --user {{ elasticsearch.user }} --pass {{ elasticsearch.pass }} --host {{ bind_address }}",
+      "command":"/etc/sensu/plugins/check-es-file-descriptors.rb --user {{ elasticsearch.user }} --pass {{  elastic_pass.content | default('changeme') }} --host {{ bind_address }}",
       "interval":60,
       "standalone" : true,
       "subscribers":["elasticsearch"]
     },
     "check-es-heap": {
-      "command":"/etc/sensu/plugins/check-es-heap.rb -c 3000000000 -w 2500000000 --user {{ elasticsearch.user }} --pass {{ elasticsearch.pass }} --host {{ bind_address }}",
+      "command":"/etc/sensu/plugins/check-es-heap.rb -c 3000000000 -w 2500000000 --user {{ elasticsearch.user }} --pass {{  elastic_pass.content | default('changeme') }} --host {{ bind_address }}",
       "interval":60,
       "standalone" : true,
       "subscribers":["elasticsearch"]
