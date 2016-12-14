@@ -15,3 +15,4 @@
 
 - name: Compose consul server
   shell: cd /opt/consul && docker-compose -f docker-compose.yml up -d
+  become: true

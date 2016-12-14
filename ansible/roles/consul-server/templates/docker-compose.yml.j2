@@ -12,5 +12,7 @@ services:
       - "8400:8400"
       - "8500:8500"
       - "53:53/udp"
+    environment:
+      - 'CONSUL_ALLOW_PRIVILEGED_PORTS='
     command: "agent -server -bind {{ bind_address }}"
     hostname: consul
