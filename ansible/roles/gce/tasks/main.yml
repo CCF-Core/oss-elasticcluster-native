@@ -8,6 +8,14 @@
 - name: copy gce creds file
   copy: src=.gce.json dest=/tmp/.gce.json
 
+- name: Destroy all gce_vms
+  gce:
+    instance_names: "{% for hostname in groups['all'] %}{{ hostname }}{% if not loop.last %},{% endif %}{% endfor %}"
+    zone: "{{ gce.zone }}"
+    machine_type: "{{ gce.machine_type }}"
+    image: "{{ gce.image }}"
+    state: absent
+
 - name: Create all gce_vms
   gce:
     instance_names: "{% for hostname in groups['all'] %}{{ hostname }}{% if not loop.last %},{% endif %}{% endfor %}"
@@ -15,5 +23,3 @@
     machine_type: "{{ gce.machine_type }}"
     image: "{{ gce.image }}"
     state: present
-    credentials_file: /tmp/.gce.json
-    project_id: "{{ gce.project_id }}"
