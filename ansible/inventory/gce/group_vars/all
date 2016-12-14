@@ -1,0 +1,43 @@
+
+bind_address: "{{ ansible_eth0.ipv4.address }}"
+
+consul_ips:
+  - 10.0.5.56
+  - 10.0.5.57
+  - 10.0.5.58
+  - 8.8.8.8
+
+customer_id: dev
+
+datacenter: "oap"
+
+# curator_run_frequency in minutes
+elasticsearch:
+  user: elastic
+  pass: changeme
+  curator_run_frequency: 5
+  index_purge_older_than: 5
+  cluster_name: "ccf-{{ customer_id }}"
+  consul_service: "elasticsearch_{{ customer_id }}"
+  index_purge_more_than_gb: 450
+
+openstack:
+  
+openstack_environment:
+  OS_USERNAME: oss-service.gen
+  OS_PASSWORD: a5459a96921c422497aa721bbb1a6c91
+  OS_AUTH_URL: "{{ openstack.auth_url }}"
+  OS_TENANT_NAME: "{{ openstack.tenant }}"
+
+gce:
+  zone: us-west1-b
+  machine_type: n1-standard-1
+  image: centos-7
+  service_account_email: ccf-core@cisco.com
+  credentials_file: ""
+  project_id: ccf-oap
+
+remote_user: "cloud-user"
+
+sensu:
+  server: monitoring.cisco.com.node.consul

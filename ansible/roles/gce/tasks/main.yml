@@ -1,0 +1,13 @@
+---
+
+- debug: msg="{{ groups['all'] | to_json }}"
+
+- name: Create all gce_vms
+  gce:
+    instance_names: {{ groups['all'] | to_json }}
+    zone: {{ gce.zone }}
+    machine_type: {{ gce.machine_type }}
+    image: {{ gce.image }}
+    state: present
+    credentials_file: "gce.json"    
+    project_id: {{ gce.project_id }}
