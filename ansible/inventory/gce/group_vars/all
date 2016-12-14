@@ -42,8 +42,8 @@ gce_environment:
   GCE_PROJECT: ccf-oap
   GCE_CREDENTIALS_FILE_PATH: /tmp/.gce.json
 
-remote_user: "root"
-ansible_ssh_private_key_file = "{{ lookup('file', lookup('env','HOME') + '/.ssh/gce.pem') }}"
+remote_user: "cloud-user"
+#ansible_ssh_private_key_file: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa') }}"
 
 sensu:
   server: monitoring.cisco.com.node.consul
