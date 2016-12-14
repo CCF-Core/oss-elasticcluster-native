@@ -37,6 +37,11 @@ gce:
   credentials_file: ""
   project_id: ccf-oap
 
+gce_environment:
+  GCE_EMAIL: 962688093144-compute@developer.gserviceaccount.com
+  GCE_PROJECT: ccf-oap
+  GCE_CREDENTIALS_FILE_PATH: /tmp/.gce.json
+
 remote_user: "cloud-user"
 
 sensu:

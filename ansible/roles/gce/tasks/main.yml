@@ -1,13 +1,19 @@
 ---
 
-- debug: msg="{{ groups['all'] | to_json }}"
+- debug: msg="{% for hostname in groups['all'] %}{{ hostname }}{% if not loop.last %},{% endif %}{% endfor %}"
+
+- name: install lib cloud
+  yum: name=python-libcloud state=present
+
+- name: copy gce creds file
+  copy: src=.gce.json dest=/tmp/.gce.json
 
 - name: Create all gce_vms
   gce:
-    instance_names: {{ groups['all'] | to_json }}
-    zone: {{ gce.zone }}
-    machine_type: {{ gce.machine_type }}
-    image: {{ gce.image }}
+    instance_names: "{% for hostname in groups['all'] %}{{ hostname }}{% if not loop.last %},{% endif %}{% endfor %}"
+    zone: "{{ gce.zone }}"
+    machine_type: "{{ gce.machine_type }}"
+    image: "{{ gce.image }}"
     state: present
-    credentials_file: "gce.json"    
-    project_id: {{ gce.project_id }}
+    credentials_file: /tmp/.gce.json
+    project_id: "{{ gce.project_id }}"
