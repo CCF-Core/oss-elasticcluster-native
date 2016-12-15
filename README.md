@@ -12,7 +12,7 @@ This code will:
 * Create/Destory compute nodes in the environment you select
 * Update the hosts file on the localhost to point to the new ip addresses
 * Update the hosts file on each of the nodes themselves
-* Deploy docker on the hosts.  (for future use)
+* Deploy docker on the hosts.
 * Install Elasticsearch 5.x based on a URL from the groups/all variables
 * Register the service with consul.
 
