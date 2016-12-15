@@ -1,5 +1,5 @@
 
-[![Build Status](http://173.39.237.153:8983/api/badges/CCF-Core/oss-elasticcluster-native/status.svg)](http://173.39.237.153:8983/CCF-Core/oss-elasticcluster-native)
+[![Build Status](http://104.196.230.228/api/badges/CCF-Core/oss-elasticcluster-native/status.svg)](http://104.196.230.228/CCF-Core/oss-elasticcluster-native)
 
 **OSS Native Elasticsearch Cluster deployment ansible**
 
