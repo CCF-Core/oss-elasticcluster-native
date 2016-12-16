@@ -5,19 +5,13 @@
 #oss-control-03
 
 [dashboard]
-oss-web-01
+iam-web-01
 
 [elasticsearch]
-demo-oss-data-01
-demo-oss-data-02
-demo-oss-data-03
+iam-data-01
+iam-data-02
+iam-data-03
 
 [kafka]
-oss-kafka-01 kfk_broker_id=1
-oss-kafka-02 kfk_broker_id=2
-oss-kafka-03 kfk_broker_id=3
 
 [zookeeper]
-oss-control-01 zk_server_id=1
-oss-control-02 zk_server_id=2
-oss-control-03 zk_server_id=3
