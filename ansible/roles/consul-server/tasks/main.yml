@@ -11,7 +11,8 @@
   file: path=/opt/consul state=directory
 
 - name: Copy files to host
-  template: src=docker-compose.yml.j2 dest=/opt/consul/
+  template: src=docker-compose.yml.j2 dest=/opt/consul/docker-compose.yml
 
 - name: Compose consul server
   shell: cd /opt/consul && docker-compose -f docker-compose.yml up -d
+  become: true

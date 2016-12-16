@@ -8,4 +8,5 @@
   become: true
   tags: consul-server
   roles:
+    - docker
     - consul-server

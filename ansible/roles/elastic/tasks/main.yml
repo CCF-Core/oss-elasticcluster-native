@@ -58,10 +58,8 @@
 
  - name: Setup accounts & install license
    include: setup_cluster.yml
-   run_once: true
+   when: inventory_hostname == groups['elasticsearch'][0]
 
  - include: curator.yml
    tags: curator
 
- - include: sensu-client.yml
-   tags: sensu_client
