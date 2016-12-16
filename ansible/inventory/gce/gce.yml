@@ -1,14 +1,12 @@
 
 [consul]
-ossk-01-control-01
+dev-control-01
+dev-control-02
+dev-control-03
 
 [dashboard]
 
-
 [elasticsearch]
-ossk-01-data-01
-ossk-01-data-02
-ossk-01-data-03
 
 [kafka]
 
