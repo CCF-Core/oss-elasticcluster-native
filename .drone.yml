@@ -8,7 +8,7 @@ pipeline:
 
   scp:
     image: ccfoss/drone-scp
-    server: 10.0.5.52
+    server: oap-jump-01
     user: root
     target: /tmp/oss-elastic-cluster-native
     #Add ssh key to secrets
@@ -16,7 +16,7 @@ pipeline:
 
   test-ansible:
     image: plugins/ssh
-    host: 10.0.5.52
+    host: oap-jump-01
     user: cloud-user
     port: 22
     script:
@@ -26,9 +26,9 @@ pipeline:
   test-cluster:
     image: ccfoss/drone-test
     default_tests: elasticsearch.bats
-    es_api_ip_port: 10.0.5.76:9200
+    es_api_ip_port: 10.138.0.7:9200
     es_user: elastic
-    es_password: changeme
+    es_password: ef9783097e262728
 
   notify:
     image: plugins/slack
