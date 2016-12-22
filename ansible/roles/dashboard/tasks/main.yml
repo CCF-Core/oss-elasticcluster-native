@@ -2,7 +2,10 @@
   file: path=/opt/dashboard state=directory
 
 - name: Copy files to host
-  copy: src=dashboard/lib dest=/opt/dashboard
+  copy: src=ssl dest=/opt/dashboard/ssl
+
+- name: copy docker compose
+  template: src=docker-compose.yml.j2 dest=/opt/dashboard/docker-copy.yml
 
 - name: Compose the dashboard
   shell: cd /opt/dashboard/lib && docker-compose -f docker-compose-va-cd.yml up -d
