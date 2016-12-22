@@ -5,12 +5,12 @@
 #oss-control-03
 
 [dashboard]
-iam-web-01
+del-web-01
 
 [elasticsearch]
-iam-data-01
-iam-data-02
-iam-data-03
+del-data-01
+del-data-02
+del-data-03
 
 [kafka]
 

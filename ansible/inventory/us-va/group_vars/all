@@ -7,7 +7,7 @@ consul_ips:
   - 10.0.10.25
   - 8.8.8.8
 
-customer_id: iam
+customer_id: del
 
 datacenter: "oap"
 
