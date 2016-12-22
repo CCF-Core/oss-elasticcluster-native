@@ -1,6 +1,4 @@
 
-[![Build Status](http://104.196.230.228/api/badges/CCF-Core/oss-elasticcluster-native/status.svg)](http://104.196.230.228/CCF-Core/oss-elasticcluster-native)
-
 # Introduction
 
 This repo is for deploying the native 3 node elasticsearch cluster, based on the 5.x code based on a URL for a RPM.
