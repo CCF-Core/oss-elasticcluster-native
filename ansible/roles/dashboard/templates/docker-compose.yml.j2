@@ -1,0 +1,37 @@
+version: '2'
+services:
+  frontend:
+    user: www-data
+    ports:
+      - "80:80"
+      - "443:443"
+      - "3000:3000"
+      - "9200:3001"
+    links:
+      - apiserver
+      - proxy
+    image: ccfoss/oss-dashboard-frontend
+    environment:
+      - CONSUL={{ consul_ips[0] }}:8500
+      - CUSTOMER_ID={{ customer_id }}
+    volumes:
+      - ./ssl:/etc/nginx/ssl
+  kibana:
+    image: ccfoss/kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - CONSUL={{ consul_ips[0] }}:8500
+      - CUSTOMER_ID={{ customer_id }}
+  proxy:
+    image: ccfoss/oss-dashboard-proxy
+    links:
+      - kibana:backend
+      - apiserver
+  apiserver:
+    image: ccfoss/oss-dashboard
+    links:
+      - kibana:auth_provider
+    environment:
+      - ELASTICSEARCH_URL=elasticsearch_{{ customer_id }}.service.consul:9200
+      - PORT=3000
